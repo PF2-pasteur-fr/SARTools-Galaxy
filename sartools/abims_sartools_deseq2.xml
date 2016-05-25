@@ -1,0 +1,204 @@
+<tool id="sartools_deseq2" name="SARTools DESeq2" version="0.99.2">
+    
+    <!-- [REQUIRED] Tool description displayed after the tool name -->
+    <description>Compare two or more biological conditions in a RNA-Seq framework with DESeq2</description>
+    
+    <macros>
+    	<import>macros.xml</import>
+    </macros>
+
+    <!-- [OPTIONAL] 3rd party tools, binaries, modules... required for the tool to work -->
+    <requirements>
+    </requirements>
+    
+    <!-- [STRONGLY RECOMMANDED] Exit code rules -->
+    <stdio>
+        <!-- [HELP] If no exit code rule is defined, the tool will stop if anything is written to STDERR -->
+        <expand macro="stdio" /> 
+    </stdio>
+    
+    <!-- [OPTIONAL] Command to be executed to get the tool's version string -->
+    <version_command>
+<!--
+        tool_binary -v
+-->
+    </version_command>
+    
+    <!-- [REQUIRED] The command to execute -->
+    <command interpreter="python">
+	
+	abims_sartools_deseq2_wrapper.py
+	## parameters
+	@COMMAND_BASIC_PARAMETERS@
+    	#if str( $advanced_parameters.adv_param ) == "show":
+            @COMMAND_BATCH_PARAM@
+            --fitType $advanced_parameters.fitType
+            --cooksCutoff $advanced_parameters.cooksCutoff
+            --independentFiltering $advanced_parameters.independentFiltering
+	    --alpha $advanced_parameters.alpha
+	    --pAdjustMethod $advanced_parameters.pAdjustMethod
+	    --typeTrans $advanced_parameters.typeTrans
+	    --locfunc $advanced_parameters.locfunc
+	    --colors $advanced_parameters.colors
+    	#end if
+	## ouputs
+	@COMMAND_OUTPUTS@
+       
+    </command>
+    
+    <!-- [REQUIRED] Input files and tool parameters -->
+    <inputs>
+        
+        <expand macro="basic_parameters" />
+ 
+        <conditional name="advanced_parameters" >
+            <param name="adv_param" type="select" label="Advanced Parameters" help="" >
+                <option value="hide" selected="true">Hide</option>
+                <option value="show">Show</option>
+            </param>
+            <when value="hide" />
+            <when value="show">
+		<expand macro="batch_param" />
+                <param name="fitType" type="select" label="Mean-variance relationship" help="(-f, --fitType) Type of model for the mean-dispersion relationship. Parametric by default." >
+          		<option value="parametric" selected="true">parametric</option>
+			<option value="local">local</option>
+		</param>
+		<param name="cooksCutoff" type="boolean" checked="true" truevalue="TRUE" falsevalue="FALSE" label="Perform the outliers detection" help="(-o, --cooksCutoff) Checked by default."/>
+		<param name="independentFiltering" type="boolean" checked="true" truevalue="TRUE" falsevalue="FALSE" label="Perform independent filtering" help="(-i, --independentFiltering) Checked by default."/>
+		<expand macro="alpha_param" />
+		<expand macro="padjustmethod_param" />
+            	<param name="typeTrans" type="select" label="Transformation for PCA/clustering" help="(-T --typeTrans) Method of transformation of the counts for the clustering and the PCA: 'VST' (default) for Variance Stabilizing Transformation, or 'rlog' for Regularized Log Transformation." >
+                	<option value="VST" selected="true">VST</option>
+                	<option value="rlog">rlog</option>
+            	</param>
+            	<param name="locfunc" type="select" label="Estimation of the size factors" help="(-l --locfunc) 'median' (default) or 'shorth' from the genefilter package." >
+                	<option value="median" selected="true">median</option>
+                	<option value="shorth">shorth</option>
+            	</param>
+		<expand macro="colors_param" />
+            </when>
+        </conditional>
+
+    </inputs>
+    
+    <!-- [REQUIRED] Output files -->
+    <outputs>
+        
+        <expand macro="outputs" /> 
+              
+    </outputs>
+    
+    <!-- [OPTIONAL] Tests to be run manually by the Galaxy admin -->
+    <tests>
+        <!-- [HELP] Test files have to be in the ~/test-data directory -->
+        <test>
+        <!-- Test with 2 conditions, 2 replicates, 8217 features -->
+            <param name="targetFile" dbkey="?" value="target.txt" />
+            <param name="rawDir"   value="raw.zip" dbkey="?" ftype="no_unzip.zip"/>
+	    <param name="adv_param" value="show"/>
+            <output name="tables_html" file="SARTools_DESeq2_target_tables.html" lines_diff="2">
+            	<extra_files type="file" name="KOvsWT.complete.txt" value="SARTools_DESeq2_KOvsWT.complete.txt"/>
+	    </output>
+        </test>
+<!--        <test>
+-->        <!-- NOT WORKING YET: Test with 3 conditions, 3 replicates, 10160 features, with batch effect -->
+<!--            <param name="targetFile" dbkey="?" value="targetT048.txt" />
+            <param name="rawDir"   value="rawT048.zip" dbkey="?" ftype="no_unzip.zip"/>
+	    <param name="condRef" value="T0"/>
+	    <param name="adv_param" value="show"/>
+	    <param name="condition" value="true"/>
+            <output name="tables_html" file="SARTools_DESeq2_targetT048_tables.html" lines_diff="14">
+            	<extra_files type="file" name="T4vsT0.complete.txt" value="SARTools_DESeq2_T4vsT0.complete.txt"/>
+            	<extra_files type="file" name="T8vsT0.complete.txt" value="SARTools_DESeq2_T8vsT0.complete.txt"/>
+            	<extra_files type="file" name="T8vsT4.complete.txt" value="SARTools_DESeq2_T8vsT4.complete.txt"/>
+	    </output>
+        </test>
+-->    </tests>
+    
+    <!-- [OPTIONAL] Help displayed in Galaxy -->
+    <help>
+
+@HELP_AUTHORS@
+
+===============
+SARTools DESeq2
+===============
+
+-----------
+Description
+-----------
+
+@HELP_DESCRIPTION@
+
+
+-----------
+Input files
+-----------
+
+@HELP_INPUT_FILES@
+
+
+----------
+Parameters
+----------
+
+	@HELP_BASIC_PARAMETERS@
+	* **batch:** adjustment variable to use as a batch effect, must be a column of the target file (NULL if no batch effect needs to be taken into account);
+	* **alpha:** significance threshold applied to the adjusted p-values to select the differentially expressed features (default is 0.05);
+	* **fitType:** type of model for the mean-dispersion relationship ("parametric" by default, or "local");
+	* **cooksCutoff:** TRUE (default) of FALSE to execute or not the detection of the outliers [4];
+	* **independentFiltering:** TRUE (default) of FALSE to execute or not the independent filtering [5];
+	* **pAdjustMethod:** p-value adjustment method for multiple testing [6, 7] ("BH" by default, "BY" or any value of p.adjust.methods);
+	* **typeTrans:** method of transformation of the counts for the clustering and the PCA (default is "VST" for Variance Stabilizing Transformation, or "rlog" for Regularized Log Transformation);
+	* **locfunc:** function used for the estimation of the size factors (default is "median", or "shorth" from the genefilter package);
+	* **colors:** colors used for the figures (one per biological condition), 8 are given by default.
+
+
+------------
+Output files
+------------
+
+@HELP_OUTPUT_FILES@
+
+		
+---------------------------------------------------
+
+[1] G.-K. Smyth. Limma: linear models for microarray data. In R. Gentleman, V. Carey, S. Dudoit, R. Irizarry, and W. Huber, editors, Bioinformatics and Computational Biology Solutions Using R and Bioconductor, pages 397–420. Springer, New York, 2005.
+
+[2] S. Anders. HTSeq: Analysing high-throughput sequencing data with Python. http://www-huber.embl.de/users/anders/HTSeq/, 2011.
+
+[3] S. Anders, P.-T. Pyl, and W. Huber. HTSeq - A Python framework to work with high-throughput sequencing data. bioRxiv preprint, 2014. URL: http://dx.doi.org/10.1101/002824.
+
+[4] R.-D. Cook. Detection of Influential Observation in Linear Regression. Technometrics, February 1977.
+
+[5] R. Bourgon, R. Gentleman, and W. Huber. Independent filtering increases detection power for high-throughput experiments. PNAS, 107(21):9546–9551, 2010. URL: http://www.pnas.org/content/107/21/9546.long.
+
+[6] Y. Benjamini and Y. Hochberg. Controlling the false discovery rate: a practical and powerful approach to multiple testing. Journal of the Royal Statistical Society B, 57:289–300, 1995.
+
+[7] Y. Benjamini and D. Yekutieli. The control of the false discovery rate in multiple testing under dependency. Ann. Statist., 29(4):1165–1188, 2001.
+
+
+   </help>
+
+   <citations>
+    <expand macro="common_citations" /> 
+    <citation type="bibtex">@ARTICLE{Cook77,
+    author = {R.-D. Cook},
+    title = {Detection of Influential Observation in Linear Regression},
+    journal = {Technometrics},
+    year = {1977},
+    month = {February}
+    }</citation>
+    <citation type="bibtex">@ARTICLE{Bourgon10,
+    author = {R. Bourgon, R. Gentleman, and W. Huber},
+    title = {Independent filtering increases detection power for high-throughput experiments},
+    journal = {PNAS},
+    year = {2010},
+    volume = {107},
+    number = {21},
+    pages = {9546–9551},
+    note = {URL: http://www.pnas.org/content/107/21/9546.long}
+    }</citation>
+   </citations>
+    
+</tool>

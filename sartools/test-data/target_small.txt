@@ -1,0 +1,6 @@
+label	files	group
+WT1	WT1.htseq_small.out	WT
+WT2	WT2.htseq_small.out	WT
+KO1	KO1.htseq_small.out	KO
+KO2	KO2.htseq_small.out	KO
+

@@ -1,0 +1,197 @@
+<tool id="sartools_edger" name="SARTools edgeR" version="0.99.2">
+    
+    <!-- [REQUIRED] Tool description displayed after the tool name -->
+    <description>Compare two or more biological conditions in a RNA-Seq framework with edgeR</description>
+    
+    <macros>
+    	<import>macros.xml</import>
+    </macros>
+    
+    <!-- [OPTIONAL] 3rd party tools, binaries, modules... required for the tool to work -->
+    <requirements>
+    </requirements>
+    
+    <!-- [STRONGLY RECOMMANDED] Exit code rules -->
+    <stdio>
+        <!-- [HELP] If no exit code rule is defined, the tool will stop if anything is written to STDERR -->
+        <expand macro="stdio" /> 
+    </stdio>
+    
+    <!-- [OPTIONAL] Command to be executed to get the tool's version string -->
+    <version_command>
+<!--
+        tool_binary -v
+-->
+    </version_command>
+    
+    <!-- [REQUIRED] The command to execute -->
+    <command interpreter="python">
+	
+	abims_sartools_edger_wrapper.py
+	## parameters
+	@COMMAND_BASIC_PARAMETERS@
+    	#if str( $advanced_parameters.adv_param ) == "show":
+            @COMMAND_BATCH_PARAM@
+	    --alpha $advanced_parameters.alpha
+	    --pAdjustMethod $advanced_parameters.pAdjustMethod
+	    --cpmCutoff $advanced_parameters.cpmCutoff
+	    --geneSelection $advanced_parameters.geneSelection
+	    --normalizationMethod $advanced_parameters.normalizationMethod
+	    --colors $advanced_parameters.colors
+    	#end if
+	## ouputs
+	@COMMAND_OUTPUTS@
+        
+    </command>
+    
+    <!-- [REQUIRED] Input files and tool parameters -->
+    <inputs>
+        
+        <expand macro="basic_parameters" />
+ 
+        <conditional name="advanced_parameters" >
+            <param name="adv_param" type="select" label="Advanced Parameters" help="" >
+                <option value="hide" selected="true">Hide</option>
+                <option value="show">Show</option>
+            </param>
+            <when value="hide" />
+            <when value="show">
+		<expand macro="batch_param" />
+		<expand macro="alpha_param" />
+		<expand macro="padjustmethod_param" />
+		<param name="cpmCutoff" type="integer" value="1" min="0" label="Counts-per-million cut-off to filter low counts" help="(-m, --cpmCutoff) Set to 0 to disable filtering. Default is 1." />
+		<param name="geneSelection" type="select" label="Selection of the features in MDSPlot" help="(-g, --gene.selection) Default is 'pairwise'." >
+                	<option value="pairwise" selected="true">pairwise</option>
+                	<option value="common">common</option>
+		</param>
+		<param name="normalizationMethod" type="select" label="Normalization method in calcNormFactors" help="(-n, --normalizationMethod) 'TMM' (default), 'RLE' (DESeq method) or 'upperquartile'." >
+                	<option value="TMM" selected="true">TMM</option>
+                	<option value="RLE">RLE</option>
+                	<option value="upperquartile">upperquartile</option>
+		</param>
+		<expand macro="colors_param" />
+            </when>
+        </conditional>
+
+    </inputs>
+    
+    <!-- [REQUIRED] Output files -->
+    <outputs>
+        
+        <expand macro="outputs" /> 
+              
+    </outputs>
+    
+    <!-- [OPTIONAL] Tests to be run manually by the Galaxy admin -->
+    <tests>
+        <!-- [HELP] Test files have to be in the ~/test-data directory -->
+        <test>
+	    <!-- Test with 2 conditions, 2 replicates, 10 features -->
+            <param name="targetFile" dbkey="?" value="target_small.txt" />
+            <param name="rawDir" value="raw_small.zip" dbkey="?" ftype="no_unzip.zip"/>
+	    <param name="adv_param" value="show"/>
+            <output name="tables_html" file="SARTools_edgeR_target_small_tables.html" lines_diff="2">
+            	<extra_files type="file" name="KOvsWT.complete.txt" value="SARTools_edgeR_KOvsWT_small.complete.txt"/>
+	    </output>
+        </test>
+<!--        <test>
+-->        <!-- NOT WORKING YET: Test with 3 conditions, 3 replicates, 10 features, with batch effect -->
+<!--            <param name="targetFile" dbkey="?" value="targetT048_small.txt" />
+            <param name="rawDir"   value="rawT048_small.zip" dbkey="?" ftype="no_unzip.zip"/>
+	    <param name="condRef" value="T0"/>
+	    <param name="adv_param" value="show"/>
+	    <param name="condition" value="true"/>
+            <output name="tables_html" file="SARTools_edgeR_targetT048_small_tables.html" lines_diff="12">
+            	<extra_files type="file" name="T4vsT0.complete.txt" value="SARTools_edgeR_T4vsT0_small.complete.txt"/>
+            	<extra_files type="file" name="T8vsT0.complete.txt" value="SARTools_edgeR_T8vsT0_small.complete.txt"/>
+            	<extra_files type="file" name="T8vsT4.complete.txt" value="SARTools_edgeR_T8vsT4_small.complete.txt"/>
+	    </output>
+        </test>
+-->        <test>
+        <!-- Test with 2 conditions, 2 replicates, 8217 features -->
+            <param name="targetFile" dbkey="?" value="target.txt" />
+            <param name="rawDir"   value="raw.zip" dbkey="?" ftype="no_unzip.zip"/>
+	    <param name="adv_param" value="show"/>
+            <output name="tables_html" file="SARTools_edgeR_target_tables.html" lines_diff="2">
+            	<extra_files type="file" name="KOvsWT.complete.txt" value="SARTools_edgeR_KOvsWT.complete.txt"/>
+	    </output>
+        </test>
+<!--        <test>
+-->        <!-- NOT WORKING YET: Test with 3 conditions, 3 replicates, 10160 features, with batch effect -->
+<!--            <param name="targetFile" dbkey="?" value="targetT048.txt" />
+            <param name="rawDir"   value="rawT048.zip" dbkey="?" ftype="no_unzip.zip"/>
+	    <param name="condRef" value="T0"/>
+	    <param name="adv_param" value="show"/>
+	    <param name="condition" value="true"/>
+            <output name="tables_html" file="SARTools_edgeR_targetT048_tables.html" lines_diff="14">
+            	<extra_files type="file" name="T4vsT0.complete.txt" value="SARTools_edgeR_T4vsT0.complete.txt"/>
+            	<extra_files type="file" name="T8vsT0.complete.txt" value="SARTools_edgeR_T8vsT0.complete.txt"/>
+            	<extra_files type="file" name="T8vsT4.complete.txt" value="SARTools_edgeR_T8vsT4.complete.txt"/>
+	    </output>
+        </test>
+-->    </tests>
+    
+    <!-- [OPTIONAL] Help displayed in Galaxy -->
+    <help>
+
+@HELP_AUTHORS@
+
+==============
+SARTools edgeR
+==============
+
+-----------
+Description
+-----------
+
+@HELP_DESCRIPTION@
+
+
+-----------
+Input files
+-----------
+
+@HELP_INPUT_FILES@
+
+
+----------
+Parameters
+----------
+
+	@HELP_BASIC_PARAMETERS@
+	* **batch:** adjustment variable to use as a batch effect, must be a column of the target file (NULL if no batch effect needs to be taken into account);
+	* **alpha:** significance threshold applied to the adjusted p-values to select the differentially expressed features (default is 0.05);
+	* **pAdjustMethod:** p-value adjustment method for multiple testing [4, 5] ("BH" by default, "BY" or any value of p.adjust.methods);
+	* **cpmCutoff:** counts-per-million cut-off to filter low counts (default is 1, set to 0 to disable filtering);
+	* **gene.selection:** method of selection of the features for the MultiDimensional Scaling plot ("pairwise" by default or common);
+	* **normalizationMethod:** normalization method in calcNormFactors(): "TMM" (default), "RLE" (DESeq method) or "upperquartile";
+	* **colors:** colors used for the figures (one per biological condition), 8 are given by default.
+
+
+------------
+Output files
+------------
+
+@HELP_OUTPUT_FILES@
+
+		
+---------------------------------------------------
+
+[1] G.-K. Smyth. Limma: linear models for microarray data. In R. Gentleman, V. Carey, S. Dudoit, R. Irizarry, and W. Huber, editors, Bioinformatics and Computational Biology Solutions Using R and Bioconductor, pages 397–420. Springer, New York, 2005.
+
+[2] S. Anders. HTSeq: Analysing high-throughput sequencing data with Python. http://www-huber.embl.de/users/anders/HTSeq/, 2011.
+
+[3] S. Anders, P.-T. Pyl, and W. Huber. HTSeq - A Python framework to work with high-throughput sequencing data. bioRxiv preprint, 2014. URL: http://dx.doi.org/10.1101/002824.
+
+[4] Y. Benjamini and Y. Hochberg. Controlling the false discovery rate: a practical and powerful approach to multiple testing. Journal of the Royal Statistical Society B, 57:289–300, 1995.
+
+[5] Y. Benjamini and D. Yekutieli. The control of the false discovery rate in multiple testing under dependency. Ann. Statist., 29(4):1165–1188, 2001.
+
+
+   </help>
+
+   <citations>
+        <expand macro="common_citations" /> 
+   </citations>
+    
+</tool>

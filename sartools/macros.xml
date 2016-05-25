@@ -1,0 +1,250 @@
+<macros>
+
+  <macro name="stdio">
+        <exit_code range="1:" level="fatal" />
+  </macro>
+
+  <token name="@COMMAND_BASIC_PARAMETERS@">
+	--projectName $projectName
+	--author $author
+	--targetFile $targetFile
+	--rawDir $rawDir
+	--featuresToRemove $featuresToRemove
+	--varInt $varInt
+	--condRef $condRef
+  </token>
+
+  <token name="@COMMAND_BATCH_PARAM@">
+            #if $advanced_parameters.batch_condition.condition:
+            --batch $advanced_parameters.batch_condition.batch
+            #else:
+            --batch NULL
+            #end if
+  </token>
+
+  <token name="@COMMAND_OUTPUTS@">
+	--figures_html $figures_html 
+	--figures_html_files_path $figures_html.files_path
+	--tables_html $tables_html 
+	--tables_html_files_path $tables_html.files_path
+	--rdata $rdata
+	--report_html $report_html
+ 	--log $log
+  </token>
+
+  <macro name="basic_parameters">
+        <param name="projectName" type="text" value="Project" label="Name of the project used for the report" help="(-P, --projectName)" >
+		<validator type="empty_field"/>
+	</param>
+        <param name="author" type="text" value="Galaxy" label="Name of the report author" help="(-A, --author)" >
+		<validator type="empty_field"/>
+	</param>
+        <param name="targetFile" type="data" format="txt" label="Design / target file" help="(-t, --targetFile) See the help section below for details on the required format." />        
+        <param name="rawDir" type="data" format="no_unzip.zip" label="Zip file containing raw counts files" help="(-r, --rawDir) See the help section below for details on the required format." />        
+        <param name="featuresToRemove" type="text" size="100" value="alignment_not_unique,ambiguous,no_feature,not_aligned,too_low_aQual" label="Names of the features to be removed" help="(-F, --featuresToRemove) Separate the features with a comma, no space allowed. More than once can be specified. Specific HTSeq-count information and rRNA for example. Default are 'alignment_not_unique,ambiguous,no_feature,not_aligned,too_low_aQual'." >
+		<validator type="empty_field"/>
+	</param>
+        <param name="varInt" type="text" value="group" label="Factor of interest" help="(-v, --varInt) Biological condition in the target file. Default is 'group'." >
+		<validator type="empty_field"/>
+	</param>
+        <param name="condRef" type="text" value="WT" label="Reference biological condition" help="(-c, --condRef) Reference biological condition used to compute fold-changes, must be one of the levels of 'Factor of interest'." >
+		<validator type="empty_field"/>
+	</param>
+  </macro>
+
+  <macro name="batch_param">
+		<conditional name="batch_condition">
+			<param name="condition" type="boolean" checked="false" truevalue="batch" falsevalue="NULL" label="Add a blocking factor" help="(-b, --batch) Adjustment variable to use as a batch effect. Default: unchecked if no batch effect needs to be taken into account."/>
+            		<when value="NULL" />
+			<when value="batch">
+				<param name="batch" type="text" value="batch" label="Blocking factor value" help="Must be a column of the target file" >
+					<validator type="empty_field"/>
+				</param>
+			</when>
+         	</conditional>
+  </macro>
+
+  <macro name="alpha_param">
+		<param name="alpha" type="float" value="0.05" min="0" max="1" label="Threshold of statistical significance" help="(-a, --alpha) Significance threshold applied to the adjusted p-values to select the differentially expressed features. Default is 0.05. The comma is not allowed as decimal separator, use a point instead." />
+  </macro>
+
+  <macro name="padjustmethod_param">
+		<param name="pAdjustMethod" type="select" label="p-value adjustment method" help="(-p, --pAdjustMethod) p-value adjustment method for multiple testing. 'BH' by default, 'BY' or any value of p.adjust.methods." >
+                	<option value="BH" selected="true">BH</option>
+                	<option value="BY">BY</option>
+                	<option value="bonferroni">bonferroni</option>
+                	<option value="fdr">fdr</option>
+                	<option value="hochberg">hochberg</option>
+                	<option value="holm">holm</option>
+                	<option value="hommel">hommel</option>
+		</param>
+  </macro>
+
+  <macro name="colors_param">
+		<param name="colors" type="text" size="100" value="dodgerblue,firebrick1,MediumVioletRed,SpringGreen,chartreuse,cyan,darkorchid,darkorange" label="Colors of each biological condition on the plots: 'col1,col2,col3,col4'"           help="(-C, --colors) Separate the colors with a comma, no space allowed. Default are 'dodgerblue,firebrick1,MediumVioletRed,SpringGreen,chartreuse,cyan,darkorchid,darkorange'." >
+			<validator type="empty_field"/>
+		</param>
+  </macro>
+
+  <macro name="outputs">
+        <data name="report_html" format="html"    label="${tool.name} report" /> 
+        <data name="tables_html" format="html"    label="${tool.name} tables" /> 
+        <data name="figures_html" format="html"    label="${tool.name} figures" /> 
+        <data name="log" format="txt"    label="${tool.name} R log" /> 
+        <data name="rdata" format="data"    label="${tool.name} R objects (.RData)" /> 
+  </macro>
+
+  <token name="@HELP_AUTHORS@">
+.. class:: infomark
+
+**Authors** M.-A. Dillies and H. Varet
+
+ | If you use this tool, please cite: H. Varet, J.-Y. Coppee and M.-A. Dillies, SARTools: a DESeq2- and edgeR-based R pipeline for comprehensive differential analysis of RNA-seq data, 2015 (submitted).
+ | For details about this tool, please go to https://github.com/PF2-pasteur-fr/SARTools
+
+.. class:: infomark
+
+**Galaxy integration** Loraine Brillet-Guéguen, Institut Français de Bioinformatique
+
+ | Contact support.abims@sb-roscoff.fr for any questions or concerns about the Galaxy implementation of this tool.
+
+---------------------------------------------------
+  </token>
+
+  <token name="@HELP_DESCRIPTION@">
+ | SARTools is a R package dedicated to the differential analysis of RNA-seq data. It provides tools to generate descriptive and diagnostic graphs, to run the differential analysis with one of the well known DESeq2 or edgeR packages and to export the results into easily readable tab-delimited files. It also facilitates the generation of a HTML report which displays all the figures produced, explains the statistical methods and gives the results of the differential analysis. 
+ | Note that SARTools does not intend to replace DESeq2 or edgeR: it simply provides an environment to go with them. For more details about the methodology behind DESeq2 or edgeR, the user should read their documentations and papers.
+  </token>
+
+  <token name="@HELP_INPUT_FILES@">
+.. class:: warningmark
+
+If the counts and the target files are not supplied in the required formats, the workflow will probably crash and will not be able to run the analysis.
+
+
++---------------------------+-----------+
+| Parameter : num + label   |  Format   |
++===========================+===========+
+| 1 : Design / target file  |  tabular  |
++---------------------------+-----------+
+| 2 : Raw counts files      |   zip     |
++---------------------------+-----------+
+
+
+Design/target file:
+	| The user has to supply a tab delimited file which describes the experiment, i.e. which contains the name of the biological condition associated with each sample. This file is called ”target” as a reference to the target file needed when using the limma package [1]. This file has one row per sample and is composed of at least three columns with headers:
+
+	* column 1 : unique names of the samples (short but informative as they will be displayed on all the figures);
+	* column 2 : name of the count files;
+	* column 3 : biological conditions;
+	* optional columns : further information about the samples (day of library preparation for example).
+
+
+- Example of a target file::
+
+    label  files                         group
+    s1c1   count_file_sample1_cond1.txt  cond1
+    s2c1   count_file_sample2_cond1.txt  cond1
+    s1c2   count_file_sample1_cond2.txt  cond2
+    s2c2   count_file_sample2_cond2.txt  cond2
+
+
+Zip file containing raw counts files:
+	| The statistical analysis assumes that reads have already been mapped and that counts per feature (gene or transcript) are available. If counting has been done with HTSeq-count [2, 3], output files are ready to be loaded in R with the dedicated SARTools function. If not, the user must supply, in a zip file, one count file per sample with two tab delimited columns without header:
+
+	* column 1 : the unique IDs of the features;
+	* column 2 : the raw counts associated with these features (null or positive integers).
+  </token>
+
+  <token name="@HELP_BASIC_PARAMETERS@">
+	* **projectName:** name of the project;
+	* **author:** author of the analysis;
+	* **featuresToRemove:** character vector containing the IDs of the features to remove before running the analysis (default are "alignment not unique", "ambiguous", "no feature", "not aligned", "too low aQual" to remove HTSeq-count specific rows);
+	* **varInt:** variable of interest, i.e. biological condition, in the target file ("group" by default);
+	* **condRef:** reference biological condition used to compute fold-changes (no default, must be one of the levels of varInt);
+  </token>
+
+  <token name="@HELP_OUTPUT_FILES@">
+**Report:**
+
+
+	| Give details about the methodology, the different steps and the results. It displays all the figures produced and the most important results of the differential analysis as the number of up- and down-regulated features. 
+	| The user should read the full HTML report and closely analyze each figure to check that the analysis ran smoothly.
+
+
+**Tables:**
+
+
+	* **TestVsRef.complete.txt:** contains all the features studied;
+	* **TestVsRef.down.txt:** contains only significant down-regulated features, i.e. less expressed in Test than in Ref;
+	* **TestVsRef.up.txt:** contains only significant up-regulated features i.e. more expressed in Test than in Ref.
+
+
+**Figures:**
+
+
+	* **MAplot.png:** MA-plot for each comparison (log ratio of the means vs intensity).
+	* **PCA.png:** first and second factorial planes of the PCA on the samples based on VST or rlog data;
+	* **barplotNull.png:** percentage of null counts per sample;
+	* **barplotTC.png:** total number of reads per sample;
+	* **cluster.png:** hierachical clustering of the samples (based on VST or rlog data);
+	* **countsBoxplot.png:** boxplots on raw and normalized counts;
+	* **densplot.png:** estimation of the density of the counts for each sample;
+	* **diagSizeFactorsHist.png:** diagnostic of the estimation of the size factors;
+	* **diagSizeFactorsTC.png:** plot of the size factors vs the total number of reads;
+	* **dispersionsPlot.png:** graph of the estimations of the dispersions and diagnostic of log-linearity of the dispersions;
+	* **majSeq.png:** percentage of reads caught by the feature having the highest count in each sample;
+	* **pairwiseScatter.png:** pairwise scatter plot between each pair of samples and SERE values;
+	* **rawpHist.png:** histogram of the raw p-values for each comparison;
+	* **volcanoPlot.png:** vulcano plot for each comparison (− log10 (adjusted P value) vs log ratio of the means).
+
+
+**R log file:**
+
+
+	| Give the R console outputs.
+
+
+**R objects (.RData file):**
+
+
+	| Give all the R objects created during the analysis is saved: it may be used to perform downstream analyses.
+  </token>
+
+  <macro name="common_citations">
+    <citation type="bibtex">@UNPUBLISHED{Varet14,
+    author = {H. Varet, J.-Y. Coppee and M.-A. Dillies},
+    title = {SARTools: a DESeq2- and edgeR-based R pipeline for comprehensive differential analysis of RNA-seq data},
+    year = {2015},
+    note = {submitted}
+    }</citation>
+    <citation type="bibtex">@INBOOK{Smyth05,
+    author = {G.-K. Smyth},
+    editor = {R. Gentleman, V. Carey, S. Dudoit, R. Irizarry, and W. Huber},
+    chapter = {Limma: linear models for microarray data},
+    title = {Bioinformatics and Computational Biology Solutions Using R and Bioconductor},
+    publisher = {Springer},
+    year = {2005},
+    pages = {397–420}
+    }</citation>
+    <citation type="doi">10.1093/bioinformatics/btu638</citation>
+    <citation type="bibtex">@ARTICLE{Benjamini95,
+    author = {Y. Benjamini and Y. Hochberg},
+    title = {Controlling the false discovery rate: a practical and powerful approach to multiple testing},
+    journal = {Journal of the Royal Statistical Society B},
+    year = {1995},
+    volume = {57},
+    pages = {289–300}
+    }</citation>
+    <citation type="bibtex">@ARTICLE{Benjamini01,
+    author = {Y. Benjamini and D. Yekutieli},
+    title = {The control of the false discovery rate in multiple testing under dependency},
+    journal = {Ann. Statist.},
+    year = {2001},
+    volume = {29},
+    number = {4},
+    pages = {1165–1188}
+    }</citation>
+   </macro>
+
+</macros>
