@@ -1,4 +1,4 @@
 <?xml version="1.0"?>
 <repositories description="SARTools requires the Galaxy applicable data format no_unzip.zip">
-     <repository changeset_revision="5b7708ddf015" name="no_unzip_datatypes" owner="lecorguille" toolshed="http://toolshed.france-bioinformatique.fr" />
+     <repository name="no_unzip_datatypes" owner="lecorguille" />
 </repositories>
