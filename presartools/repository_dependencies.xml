@@ -1,4 +1,0 @@
-<?xml version="1.0"?>
-<repositories description="SARTools requires the Galaxy applicable data format no_unzip.zip">
-     <repository name="no_unzip_datatype" owner="lecorguille"/>
-</repositories>
