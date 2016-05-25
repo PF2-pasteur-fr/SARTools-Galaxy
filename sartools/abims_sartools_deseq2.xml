@@ -6,23 +6,9 @@
     <macros>
     	<import>macros.xml</import>
     </macros>
-
-    <!-- [OPTIONAL] 3rd party tools, binaries, modules... required for the tool to work -->
-    <requirements>
-    </requirements>
     
-    <!-- [STRONGLY RECOMMANDED] Exit code rules -->
-    <stdio>
-        <!-- [HELP] If no exit code rule is defined, the tool will stop if anything is written to STDERR -->
-        <expand macro="stdio" /> 
-    </stdio>
-    
-    <!-- [OPTIONAL] Command to be executed to get the tool's version string -->
-    <version_command>
-<!--
-        tool_binary -v
--->
-    </version_command>
+    <expand macro="requirements"/>
+    <expand macro="stdio"/>
     
     <!-- [REQUIRED] The command to execute -->
     <command interpreter="python">

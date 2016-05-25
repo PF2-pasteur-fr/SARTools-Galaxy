@@ -1,8 +1,15 @@
 <macros>
-
-  <macro name="stdio">
-        <exit_code range="1:" level="fatal" />
-  </macro>
+    <xml name="requirements">
+        <requirements>
+            <requirement type="package" version="1.2.0">r-sartools</requirement>
+        </requirements>
+    </xml>
+    
+    <xml name="stdio">
+        <stdio>
+            <exit_code range="1" level="fatal" />
+        </stdio>
+    </xml>
 
   <token name="@COMMAND_BASIC_PARAMETERS@">
 	--projectName $projectName
