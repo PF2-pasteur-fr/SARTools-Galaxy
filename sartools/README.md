@@ -36,6 +36,11 @@ conda create -n r-sartools r-sartools`
 ```
 
 
+Test:
+-----
+
+`planemo test` using conda: passed 
+
 
 References:
 -----------

@@ -81,10 +81,14 @@
         <!-- Test with 2 conditions, 2 replicates, 8217 features -->
             <param name="targetFile" dbkey="?" value="target.txt" />
             <param name="rawDir"   value="raw.zip" dbkey="?" ftype="zip"/>
-	    <param name="adv_param" value="show"/>
-            <output name="tables_html" file="SARTools_DESeq2_target_tables.html" lines_diff="2">
-            	<extra_files type="file" name="KOvsWT.complete.txt" value="SARTools_DESeq2_KOvsWT.complete.txt"/>
-	    </output>
+	        <param name="adv_param" value="show"/>
+            <output name="log">
+                <assert_contents>
+                    <has_text text="KO vs WT    0.1       171" />
+                    <has_text text="KO vs WT    2584   2665 5249" />
+                    <has_text text="HTML report created" />
+                </assert_contents>
+            </output>
         </test>
 <!--        <test>
 -->        <!-- NOT WORKING YET: Test with 3 conditions, 3 replicates, 10160 features, with batch effect -->
