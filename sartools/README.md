@@ -17,6 +17,26 @@ Requirements:
 
     SARTools 1.1.0 can be downloaded on github (https://github.com/PF2-pasteur-fr/SARTools). More information about installation can be found at this url.
 
+Requirements using Conda:
+-------------------------
+[![install with bioconda](https://img.shields.io/badge/install%20with-bioconda-brightgreen.svg?style=flat)](http://bioconda.github.io/recipes/r-sartools/README.html)
+
+[Conda](http://conda.pydata.org/) is package manager that among many other things can be used to manage Python packages.
+
+
+```
+#To install miniconda2
+#http://conda.pydata.org/miniconda.html
+#To install the SARTools R library using conda:
+conda install r-sartools
+#To set an environment:
+conda create -n r-sartools r-sartools`
+#To activate the environment:
+. activate r-sartools
+```
+
+
+
 References:
 -----------
     The SARTools package has been developped at PF2 - Institut Pasteur by M.-A. Dillies and H. Varet (hugo.varet@pasteur.fr). 
