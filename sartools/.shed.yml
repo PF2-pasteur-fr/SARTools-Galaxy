@@ -1,0 +1,8 @@
+categories: [RNA,Statistics,Transcriptomics]
+description: SARTools is a R package dedicated to the differential analysis of RNA-seq
+  data.
+long_description: 'SARTools provides R tools and an environment for the statistical
+  analysis of RNA-Seq projects: load and clean data, produce figures, perform statistical
+  analysis/testing with DESeq2 or edgeR, export results and create final report.'
+name: sartools
+owner: lgueguen
