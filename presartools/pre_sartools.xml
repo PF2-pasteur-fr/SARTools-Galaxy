@@ -1,0 +1,115 @@
+<tool id="presartools" name="Preprocess files for SARTools" version="0.1.0">
+    <description>generate design/target file and archive for SARTools inputs</description>
+    <command interpreter="python">
+        pre_sartools.py
+        --outfile=$outfile
+        --outarch=$outarch
+        #if $batch_condition.condition:
+            --batch $batch_condition.condition
+            #for $i, $input in enumerate ( $batch_condition.levels ):
+                #for $j, $input_rep in enumerate ($input.rep_counts ): 
+                    --inputs "${input.level_name}" "${input_rep.count_data}" "${input_rep.label}" "${input_rep.batch_value}"
+                #end for
+            #end for
+        #else:
+            --batch NULL
+            #for $i, $input in enumerate ( $batch_condition.levels ):
+                #for $j, $input_rep in enumerate ($input.rep_counts ):
+                    --inputs "${input.level_name}" "${input_rep.count_data}" "${input_rep.label}" 
+                #end for
+            #end for
+        #end if
+
+    </command>
+    <inputs>
+        <conditional name="batch_condition">
+            <param name="condition" type="boolean" checked="false" truevalue="batch" falsevalue="NULL" label="Add a blocking factor" help="Adjustment variable to use as a batch effect (default no)."/>
+            <when value="NULL"> 
+                <repeat name="levels" title="Group" min="2">
+                    <param name="level_name" type="text" format="txt" value="group1" label="Group name">
+                        <sanitizer>
+                            <valid initial="string.letters,string.digits">
+                                <add value="_" />
+                            </valid>
+                            <mapping initial="none">
+                                <add source=" " target="_"/>
+                            </mapping>
+                        </sanitizer>
+                    </param>
+                    <repeat name="rep_counts" title="Raw counts" min="2">
+                        <param name="count_data" type="data" format="txt" label="Replicate raw count"/>
+                        <param name="label" format="txt" type="text" value="replicate1" label="Replicate label name" help="You need to specify an unique label name for your replicates.">
+                            <sanitizer>
+                                <valid initial="string.letters,string.digits">
+                                    <add value="_" />
+                                </valid>
+                                <mapping initial="none">
+                                    <add source=" " target="_"/>
+                                </mapping>          
+                            </sanitizer>
+                        </param>
+                    </repeat>
+                </repeat>
+            </when> 
+            <when value="batch">
+                <repeat name="levels" title="level" min="2">
+                    <param name="level_name" type="text" format="txt" value="group1" label="Group name">
+                        <sanitizer>
+                            <valid initial="string.letters,string.digits">
+                                <add value="_" />
+                            </valid>
+                            <mapping initial="none">
+                                <add source=" " target="_"/>
+                            </mapping>
+                        </sanitizer>
+                    </param>
+                    <repeat name="rep_counts" title="Raw counts" min="2">
+                        <param name="count_data" type="data" format="txt" label="Replicate raw count"/>
+                        <param name="label" format="txt" type="text" value="replicate1" label="Replicate label name" help="You need to specify an unique label name for your replicates.">
+                            <sanitizer>
+                                <valid initial="string.letters,string.digits">
+                                    <add value="_" />
+                                </valid>
+                                <mapping initial="none">
+                                    <add source=" " target="_"/>
+                                </mapping>
+                            </sanitizer>
+                        </param>
+                        <param name="batch_value" format="txt" type="text" value="day1" label="Blocking factor"/>
+                    </repeat>
+                </repeat>
+            </when>
+        </conditional>
+    </inputs>
+
+    <outputs>
+        <data format="tabular" name="outfile" label="design file for SARTools (on ${on_string})" />
+        <data format="no_unzip.zip" name="outarch" label="counts files for SARTools (on ${on_string})"/> 
+    </outputs>
+    <tests>
+        <test>
+            <param name="levels_0|level_name" value="group1"/>
+            <param name="levels_0|rep_counts_0|count_data" value="group1_count1.txt"/>
+            <param name="levels_0|rep_counts_0|label" value="group1_rep1"/>
+            <param name="levels_0|rep_counts_1|count_data" value="group1_count2.txt"/>
+            <param name="levels_0|rep_counts_1|label" value="group1_rep2"/>
+            <param name="levels_1|level_name" value="group2"/>
+            <param name="levels_1|rep_counts_0|count_data" value="group2_count1.txt"/>
+            <param name="levels_1|rep_counts_0|label" value="group2_rep1"/>
+            <param name="levels_1|rep_counts_1|count_data" value="group2_count2.txt"/>
+            <param name="levels_1|rep_counts_1|label" value="group2_rep2"/>
+            <output name="outfile" file="test_output_target.html"/>
+        </test>
+    </tests>
+    <help>
+-----------
+Description
+-----------
+ * This tool creates a target file and an archive to use in input of SARTools.
+ * For details about SARTools, please visit https://github.com/PF2-pasteur-fr/SARTools.
+ * The count file must be outcoming from htseq-count or RSEM
+
+ * In input of SARTools, don't change the "factor of interest", by default is group but you need to change the "Reference biological condition" in order to correspond to one name of the groups.
+ * If you add a blocking factor, you need to specify it in "Advanced Parameters" of SARTools
+    </help>
+</tool>
