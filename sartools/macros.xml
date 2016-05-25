@@ -47,7 +47,7 @@
 		<validator type="empty_field"/>
 	</param>
         <param name="targetFile" type="data" format="txt" label="Design / target file" help="(-t, --targetFile) See the help section below for details on the required format." />        
-        <param name="rawDir" type="data" format="no_unzip.zip" label="Zip file containing raw counts files" help="(-r, --rawDir) See the help section below for details on the required format." />        
+        <param name="rawDir" type="data" format="no_unzip.zip,zip" label="Zip file containing raw counts files" help="(-r, --rawDir) See the help section below for details on the required format." />        
         <param name="featuresToRemove" type="text" size="100" value="alignment_not_unique,ambiguous,no_feature,not_aligned,too_low_aQual" label="Names of the features to be removed" help="(-F, --featuresToRemove) Separate the features with a comma, no space allowed. More than once can be specified. Specific HTSeq-count information and rRNA for example. Default are 'alignment_not_unique,ambiguous,no_feature,not_aligned,too_low_aQual'." >
 		<validator type="empty_field"/>
 	</param>

@@ -80,7 +80,7 @@
         <test>
         <!-- Test with 2 conditions, 2 replicates, 8217 features -->
             <param name="targetFile" dbkey="?" value="target.txt" />
-            <param name="rawDir"   value="raw.zip" dbkey="?" ftype="no_unzip.zip"/>
+            <param name="rawDir"   value="raw.zip" dbkey="?" ftype="zip"/>
 	    <param name="adv_param" value="show"/>
             <output name="tables_html" file="SARTools_DESeq2_target_tables.html" lines_diff="2">
             	<extra_files type="file" name="KOvsWT.complete.txt" value="SARTools_DESeq2_KOvsWT.complete.txt"/>
