@@ -104,7 +104,7 @@
 	        <param name="adv_param" value="show"/>
             <output name="log">
                 <assert_contents>
-                    <has_text text="KO vs WT    2689   2714 5403" />
+                    <has_text text="KO vs WT    2691   2713 5404" />
                     <has_text text="HTML report created" />
                 </assert_contents>
             </output>
