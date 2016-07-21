@@ -228,12 +228,7 @@ Zip file containing raw counts files:
   </token>
 
   <macro name="common_citations">
-    <citation type="bibtex">@UNPUBLISHED{Varet14,
-    author = {H. Varet, J.-Y. Coppee and M.-A. Dillies},
-    title = {SARTools: a DESeq2- and edgeR-based R pipeline for comprehensive differential analysis of RNA-seq data},
-    year = {2015},
-    note = {submitted}
-    }</citation>
+    <citation type="doi">10.1371/journal.pone.0157022</citation>
     <citation type="bibtex">@INBOOK{Smyth05,
     author = {G.-K. Smyth},
     editor = {R. Gentleman, V. Carey, S. Dudoit, R. Irizarry, and W. Huber},

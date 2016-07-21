@@ -1,5 +1,5 @@
 -----------------------------------------------------------
-sartools_1_1_0: a galaxy wrapper for SARTools version 1.1.0
+SARTools-Galaxy: a galaxy wrapper for SARTools version 1.2.0
 -----------------------------------------------------------
 
 Description:
@@ -10,12 +10,12 @@ Description:
 
 Requirements:
 -------------
-    R (3.1.0 or higher), Bio-conductor package 
-    SARTools package (1.1.0)
-    other R packages: DESeq2 (1.6.0 or higher), edgeR (3.8.5 or higher), genefilter, xtable and knitr
+    R (3.2.2 or higher), Bio-conductor package 
+    SARTools package (1.2.0)
+    other R packages: DESeq2 (1.10.0 or higher), edgeR (3.12.0 or higher), genefilter, xtable and knitr
     Rscript
 
-    SARTools 1.1.0 can be downloaded on github (https://github.com/PF2-pasteur-fr/SARTools). More information about installation can be found at this url.
+    SARTools 1.2.0 can be downloaded on github (https://github.com/PF2-pasteur-fr/SARTools). More information about installation can be found at this url.
 
 Requirements using Conda:
 -------------------------
@@ -45,7 +45,7 @@ Test:
 References:
 -----------
     The SARTools package has been developped at PF2 - Institut Pasteur by M.-A. Dillies and H. Varet (hugo.varet@pasteur.fr). 
-    Thanks to cite H. Varet, J.-Y. Coppee and M.-A. Dillies, SARTools: a DESeq2- and edgeR-based R pipeline for comprehensive differential analysis of RNA-seq data, 2015 (submitted) when using this tool for any analysis published. 
+    Thanks to cite H. Varet, L. Brillet-Guéguen, J.-Y. Coppee and M.-A. Dillies, SARTools: A DESeq2- and EdgeR-Based R Pipeline for Comprehensive Differential Analysis of RNA-Seq Data, PLoS One, 2016, doi: http://dx.doi.org/10.1371/journal.pone.0157022 when using this tool for any analysis published. 
 
     The Galaxy wrapper and scripts have been developped by Loraine Brillet-Guéguen, Institut Français de Bioinformatique
 
