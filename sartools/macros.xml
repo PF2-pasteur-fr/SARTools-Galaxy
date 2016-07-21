@@ -16,7 +16,7 @@
             <regex match="rsync error"
                 source="both"
                 level="fatal"
-                description="Execution halted" />
+                description="rsync error" />
         </stdio>
     </xml>
 

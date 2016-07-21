@@ -12,7 +12,7 @@
 
     
     <!-- [REQUIRED] The command to execute -->
-    <command interpreter="python">
+    <command interpreter="python"><![CDATA[
 	
 	abims_sartools_edger_wrapper.py
 	## parameters
@@ -29,7 +29,7 @@
 	## ouputs
 	@COMMAND_OUTPUTS@
         
-    </command>
+    ]]></command>
     
     <!-- [REQUIRED] Input files and tool parameters -->
     <inputs>
@@ -125,7 +125,7 @@
 -->    </tests>
     
     <!-- [OPTIONAL] Help displayed in Galaxy -->
-    <help>
+    <help><![CDATA[
 
 @HELP_AUTHORS@
 
@@ -181,7 +181,7 @@ Output files
 [5] Y. Benjamini and D. Yekutieli. The control of the false discovery rate in multiple testing under dependency. Ann. Statist., 29(4):1165–1188, 2001.
 
 
-   </help>
+   ]]></help>
 
    <citations>
         <expand macro="common_citations" /> 
