@@ -2,6 +2,8 @@
 SARTools-Galaxy: a galaxy wrapper for SARTools version 1.2.0
 -----------------------------------------------------------
 
+[![Build Status](https://travis-ci.org/PF2-pasteur-fr/SARTools-Galaxy.svg?branch=master)](https://travis-ci.org/PF2-pasteur-fr/SARTools-Galaxy)
+
 Description:
 ------------
     SARTools is a R package dedicated to the differential analysis of RNA-seq data.
