@@ -115,7 +115,7 @@
 
 **Authors** M.-A. Dillies and H. Varet
 
- | If you use this tool, please cite: H. Varet, J.-Y. Coppee and M.-A. Dillies, SARTools: a DESeq2- and edgeR-based R pipeline for comprehensive differential analysis of RNA-seq data, 2015 (submitted).
+ | If you use this tool, please cite: H. Varet, L. Brillet-Guéguen, J.-Y. Coppee and M.-A. Dillies, SARTools: A DESeq2- and EdgeR-Based R Pipeline for Comprehensive Differential Analysis of RNA-Seq Data, PLoS One, 2016, doi: http://dx.doi.org/10.1371/journal.pone.0157022
  | For details about this tool, please go to https://github.com/PF2-pasteur-fr/SARTools
 
 .. class:: infomark
