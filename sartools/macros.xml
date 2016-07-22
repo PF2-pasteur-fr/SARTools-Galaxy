@@ -50,26 +50,21 @@
 
   <macro name="basic_parameters">
         <param name="projectName" type="text" value="Project" label="Name of the project used for the report" help="(-P, --projectName) No space allowed." >
-		<validator type="empty_field"/>
-		<validator type="regex" message="No space allowed.">\S+</validator>
+		<validator type="regex" message="Field requires a value. No space allowed.">\S+</validator>
 	</param>
         <param name="author" type="text" value="Galaxy" label="Name of the report author" help="(-A, --author) No space allowed." >
-		<validator type="empty_field"/>
-		<validator type="regex" message="No space allowed.">\S+</validator>
+		<validator type="regex" message="Field requires a value. No space allowed.">\S+</validator>
 	</param>
         <param name="targetFile" type="data" format="txt" label="Design / target file" help="(-t, --targetFile) See the help section below for details on the required format." />        
         <param name="rawDir" type="data" format="no_unzip.zip,zip" label="Zip file containing raw counts files" help="(-r, --rawDir) See the help section below for details on the required format." />        
         <param name="featuresToRemove" type="text" size="100" value="alignment_not_unique,ambiguous,no_feature,not_aligned,too_low_aQual" label="Names of the features to be removed" help="(-F, --featuresToRemove) Separate the features with a comma, no space allowed. More than once can be specified. Specific HTSeq-count information and rRNA for example. Default are 'alignment_not_unique,ambiguous,no_feature,not_aligned,too_low_aQual'." >
-		<validator type="empty_field"/>
-		<validator type="regex" message="No space allowed.">\S+</validator>
+		<validator type="regex" message="Field requires a value. No space allowed.">\S+</validator>
 	</param>
         <param name="varInt" type="text" value="group" label="Factor of interest" help="(-v, --varInt) Biological condition in the target file. Default is 'group'." >
-		<validator type="empty_field"/>
-		<validator type="regex" message="No space allowed.">\S+</validator>
+		<validator type="regex" message="Field requires a value. No space allowed.">\S+</validator>
 	</param>
         <param name="condRef" type="text" value="WT" label="Reference biological condition" help="(-c, --condRef) Reference biological condition used to compute fold-changes, must be one of the levels of 'Factor of interest'." >
-		<validator type="empty_field"/>
-		<validator type="regex" message="No space allowed.">\S+</validator>
+		<validator type="regex" message="Field requires a value. No space allowed.">\S+</validator>
 	</param>
   </macro>
 
@@ -103,8 +98,7 @@
 
   <macro name="colors_param">
 		<param name="colors" type="text" size="100" value="dodgerblue,firebrick1,MediumVioletRed,SpringGreen,chartreuse,cyan,darkorchid,darkorange" label="Colors of each biological condition on the plots: 'col1,col2,col3,col4'"           help="(-C, --colors) Separate the colors with a comma, no space allowed. Default are 'dodgerblue,firebrick1,MediumVioletRed,SpringGreen,chartreuse,cyan,darkorchid,darkorange'." >
-			<validator type="empty_field"/>
-			<validator type="regex" message="No space allowed.">\S+</validator>
+			<validator type="regex" message="Field requires a value. No space allowed.">\S+</validator>
 		</param>
   </macro>
 
