@@ -1,5 +1,5 @@
 -----------------------------------------------------------
-SARTools-Galaxy: a galaxy wrapper for SARTools version 1.2.0
+SARTools-Galaxy: a galaxy wrapper for SARTools version 1.3.2
 -----------------------------------------------------------
 
 [![Build Status](https://travis-ci.org/PF2-pasteur-fr/SARTools-Galaxy.svg?branch=master)](https://travis-ci.org/PF2-pasteur-fr/SARTools-Galaxy)
@@ -12,12 +12,12 @@ Description:
 
 Requirements:
 -------------
-    R (3.2.2 or higher), Bio-conductor package 
-    SARTools package (1.2.0)
-    other R packages: DESeq2 (1.10.0 or higher), edgeR (3.12.0 or higher), genefilter, xtable and knitr
+    R (3.3.0 or higher), Bio-conductor package 
+    SARTools package (1.3.2)
+    other R packages: DESeq2 (1.12.0 or higher), edgeR (3.12.0 or higher), genefilter, xtable and knitr
     Rscript
 
-    SARTools 1.2.0 can be downloaded on github (https://github.com/PF2-pasteur-fr/SARTools). More information about installation can be found at this url.
+    SARTools can be downloaded on github (https://github.com/PF2-pasteur-fr/SARTools). More information about installation can be found at this url.
 
 Requirements using Conda:
 -------------------------
