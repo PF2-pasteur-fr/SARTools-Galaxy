@@ -75,7 +75,7 @@ def main():
     os.system(unzip_cmd)
 
     #Create the command
-    cmd="Rscript --no-save --no-restore %s/template_script_edgeR.r --projectName %s --author %s " % (script_directory,projectName,author)
+    cmd="Rscript --no-save --no-restore %s/template_script_edgeR_CL.r --projectName %s --author %s " % (script_directory,projectName,author)
     cmd+="--targetFile %s --rawDir %s --featuresToRemove %s --varInt %s --condRef %s " % (targetFile,rawDir_unzipped_path,featuresToRemove,varInt,condRef)
     if batch and batch!="NULL":
         cmd+="--batch %s " % (batch)
