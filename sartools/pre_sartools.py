@@ -40,7 +40,7 @@ def __main__():
                     reader = csv.DictReader(csvfile, delimiter='\t', skipinitialspace=True)
                     if len(reader.fieldnames) > 2:
                         for row in reader:
-                            spamwriter.writerow((row['gene_id'], int(float(row['effective_length']))))
+                            spamwriter.writerow((row['gene_id'], int(float(row['expected_count']))))
                         zip_cmd += ' %s ' % (join(tmpdir, basename(filename)))
                     else :
                         zip_cmd += ' %s ' % (filename)
@@ -57,7 +57,7 @@ def __main__():
                     reader = csv.DictReader(csvfile, delimiter='\t', skipinitialspace=True)
                     if len(reader.fieldnames) > 2:
                         for row in reader:
-                            spamwriter.writerow((row['gene_id'], int(float(row['effective_length']))))
+                            spamwriter.writerow((row['gene_id'], int(float(row['expected_count']))))
                         zip_cmd += ' %s ' % (join(tmpdir, basename(filename)))
                     else:
                         zip_cmd += ' %s ' % (filename)
