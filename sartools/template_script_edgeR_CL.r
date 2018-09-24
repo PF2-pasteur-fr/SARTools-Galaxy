@@ -1,17 +1,9 @@
-#!/local/gensoft2/exe/R/3.1.2/bin/Rscript
-
-# to run this script, use one of these commands:
-# Rscript --no-save --no-restore --verbose template_script_edgeR_CL.r -r raw -v group -c T0 > log.txt 2>&1
-# Rscript template_script_edgeR_CL.r -r raw -v group -c T0
-
-# to get help:
-# Rscript template_script_edgeR_CL.r --help
-
 ################################################################################
 ### R script to compare several conditions with the SARTools and edgeR packages
 ### Hugo Varet
-### April 20th, 2015
-### designed to be executed with SARTools 1.1.0
+### May 16th, 2018
+### designed to be executed with SARTools 1.6.3
+### run "Rscript template_script_edgeR_CL.r --help" to get some help
 ################################################################################
 
 rm(list=ls())                                        # remove all the objects from the R session
@@ -87,7 +79,13 @@ make_option(c("-n", "--normalizationMethod"),
 make_option(c("-C", "--colors"),
 			default="dodgerblue,firebrick1,MediumVioletRed,SpringGreen,chartreuse,cyan,darkorchid,darkorange",
 			dest="cols",
-			help="colors of each biological condition on the plots\n\t\t\"col1,col2,col3,col4\"\n\t\t[default: %default]")
+			help="colors of each biological condition on the plots\n\t\t\"col1,col2,col3,col4\"\n\t\t[default: %default]"),
+
+make_option(c("-f", "--forceCairoGraph"),
+            action="store_true",
+            default=FALSE,
+            dest="forceCairoGraph",
+            help="activate cairo type")
 )
 
 # now parse the command line to check which option is given and get associated values
@@ -113,7 +111,7 @@ gene.selection <- opt$gene.selection                 # selection of the features
 normalizationMethod <- opt$normalizationMethod       # normalization method in calcNormFactors
 cpmCutoff <- opt$cpmCutoff                           # counts-per-million cut-off to filter low counts
 colors <- unlist(strsplit(opt$cols, ","))            # vector of colors of each biologicial condition on the plots
-
+forceCairoGraph <- opt$forceCairoGraph				 # force cairo as plotting device if enabled
 # print(paste("workDir", workDir))
 # print(paste("projectName", projectName))
 # print(paste("author", author))
@@ -135,6 +133,7 @@ colors <- unlist(strsplit(opt$cols, ","))            # vector of colors of each 
 ################################################################################
 # setwd(workDir)
 library(SARTools)
+if (forceCairoGraph) options(bitmapType="cairo")
 
 # checking parameters
 problem <- checkParameters.edgeR(projectName=projectName,author=author,targetFile=targetFile,
@@ -171,5 +170,5 @@ save.image(file=paste0(projectName, ".RData"))
 writeReport.edgeR(target=target, counts=counts, out.edgeR=out.edgeR, summaryResults=summaryResults,
                   majSequences=majSequences, workDir=workDir, projectName=projectName, author=author,
                   targetFile=targetFile, rawDir=rawDir, featuresToRemove=featuresToRemove, varInt=varInt,
-                  condRef=condRef, batch=batch, alpha=alpha, pAdjustMethod=pAdjustMethod, colors=colors,
-                  gene.selection=gene.selection, normalizationMethod=normalizationMethod)
+                  condRef=condRef, batch=batch, alpha=alpha, pAdjustMethod=pAdjustMethod, cpmCutoff=cpmCutoff,
+                  colors=colors, gene.selection=gene.selection, normalizationMethod=normalizationMethod)
