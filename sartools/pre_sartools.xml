@@ -1,5 +1,8 @@
 <tool id="presartools" name="Preprocess files for SARTools" version="0.1.0">
     <description>generate design/target file and archive for SARTools inputs</description>
+    <stdio>
+        <regex match="WARNING:galaxy.model:Datatype class not found" level="warning"/>
+    </stdio>
     <command interpreter="python">
         pre_sartools.py
         --outfile=$outfile
