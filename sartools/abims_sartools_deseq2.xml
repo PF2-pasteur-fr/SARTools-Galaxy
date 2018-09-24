@@ -46,19 +46,19 @@
             <when value="hide" />
             <when value="show">
 		<expand macro="batch_param" />
-                <param name="fitType" type="select" label="Mean-variance relationship" help="(-f, --fitType) Type of model for the mean-dispersion relationship. Parametric by default." >
+                <param name="fitType" type="select" label="Mean-variance relationship" argument="--fitType" help="Type of model for the mean-dispersion relationship. Parametric by default." >
           		<option value="parametric" selected="true">parametric</option>
 			<option value="local">local</option>
 		</param>
-		<param name="cooksCutoff" type="boolean" checked="true" truevalue="TRUE" falsevalue="FALSE" label="Perform the outliers detection" help="(-o, --cooksCutoff) Checked by default."/>
-		<param name="independentFiltering" type="boolean" checked="true" truevalue="TRUE" falsevalue="FALSE" label="Perform independent filtering" help="(-i, --independentFiltering) Checked by default."/>
+		<param name="cooksCutoff" type="boolean" checked="true" truevalue="TRUE" falsevalue="FALSE" label="Perform the outliers detection" argument="--cooksCutoff" help="Checked by default."/>
+		<param name="independentFiltering" type="boolean" checked="true" truevalue="TRUE" falsevalue="FALSE" label="Perform independent filtering" argument="--independentFiltering" help="Checked by default."/>
 		<expand macro="alpha_param" />
 		<expand macro="padjustmethod_param" />
-            	<param name="typeTrans" type="select" label="Transformation for PCA/clustering" help="(-T --typeTrans) Method of transformation of the counts for the clustering and the PCA: 'VST' (default) for Variance Stabilizing Transformation, or 'rlog' for Regularized Log Transformation." >
+            	<param name="typeTrans" type="select" label="Transformation for PCA/clustering" argument="--typeTrans" help="Method of transformation of the counts for the clustering and the PCA: 'VST' (default) for Variance Stabilizing Transformation, or 'rlog' for Regularized Log Transformation." >
                 	<option value="VST" selected="true">VST</option>
                 	<option value="rlog">rlog</option>
             	</param>
-            	<param name="locfunc" type="select" label="Estimation of the size factors" help="(-l --locfunc) 'median' (default) or 'shorth' from the genefilter package." >
+            	<param name="locfunc" type="select" label="Estimation of the size factors" argument="--locfunc" help="'median' (default) or 'shorth' from the genefilter package." >
                 	<option value="median" selected="true">median</option>
                 	<option value="shorth">shorth</option>
             	</param>
