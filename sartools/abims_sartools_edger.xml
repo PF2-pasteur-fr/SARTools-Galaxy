@@ -161,6 +161,7 @@ Parameters
 	* **gene.selection:** method of selection of the features for the MultiDimensional Scaling plot ("pairwise" by default or common);
 	* **normalizationMethod:** normalization method in calcNormFactors(): "TMM" (default), "RLE" (DESeq method) or "upperquartile";
 	* **colors:** colors used for the figures (one per biological condition), 8 are given by default.
+	* **forceCairoGraph:** TRUE or FALSE (default) to force the use of cairo with options(bitmapType="cairo").
 
 
 ------------
