@@ -33,6 +33,7 @@ def main():
     parser.add_argument('--typeTrans')
     parser.add_argument('--locfunc')
     parser.add_argument('--colors')
+    parser.add_argument('--forceCairoGraph')
     parser.add_argument('--figures_html')
     parser.add_argument('--figures_html_files_path')
     parser.add_argument('--tables_html')
@@ -57,6 +58,7 @@ def main():
     typeTrans=args.typeTrans
     locfunc=args.locfunc
     colors=args.colors
+    forceCairoGraph=args.forceCairoGraph
     figures_html=args.figures_html
     figures_html_files_path=args.figures_html_files_path
     tables_html=args.tables_html
@@ -99,6 +101,8 @@ def main():
         cmd+="--locfunc %s " % (locfunc)
     if colors:
         cmd+="--colors %s " % (colors)
+    if forceCairoGraph:
+        cmd+="--forceCairoGraph %s " % (forceCairoGraph)
     cmd+="> %s 2>&1" % (log)
     print("Rscript command: %s") % (cmd)
     os.system(cmd)

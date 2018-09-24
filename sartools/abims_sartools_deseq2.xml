@@ -26,6 +26,7 @@
 	    --typeTrans $advanced_parameters.typeTrans
 	    --locfunc $advanced_parameters.locfunc
 	    --colors $advanced_parameters.colors
+            --forceCairoGraph $advanced_parameters.forceCairoGraph
     	#end if
 	## ouputs
 	@COMMAND_OUTPUTS@
@@ -62,6 +63,7 @@
                 	<option value="shorth">shorth</option>
             	</param>
 		<expand macro="colors_param" />
+		<expand macro="forceCairoGraph_param" />
             </when>
         </conditional>
 

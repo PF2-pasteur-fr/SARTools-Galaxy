@@ -1,10 +1,10 @@
 <macros>
 
-    <token name="@WRAPPER_VERSION@">1.3.2</token>
+    <token name="@WRAPPER_VERSION@">1.6.3</token>
 
     <xml name="requirements">
         <requirements>
-            <requirement type="package" version="1.3.2">r-sartools</requirement>
+            <requirement type="package" version="1.6.3">r-sartools</requirement>
             <requirement type="package" version="1.3.2">r-optparse</requirement>
         </requirements>
     </xml>
@@ -103,6 +103,10 @@
 		<param name="colors" type="text" size="100" value="dodgerblue,firebrick1,MediumVioletRed,SpringGreen,chartreuse,cyan,darkorchid,darkorange" label="Colors of each biological condition on the plots: 'col1,col2,col3,col4'"           help="(-C, --colors) Separate the colors with a comma, no space allowed. Default are 'dodgerblue,firebrick1,MediumVioletRed,SpringGreen,chartreuse,cyan,darkorchid,darkorange'." >
 			<validator type="regex" message="Field requires a value. No space allowed.">\S+</validator>
 		</param>
+  </macro>
+
+  <macro name="forceCairoGraph_param">
+		<param name="forceCairoGraph" type="boolean" checked="false" truevalue="TRUE" falsevalue="FALSE" label="Activate cairo type" help="(-g, --forceCairoGraph) Unchecked by default." />
   </macro>
 
   <macro name="outputs">

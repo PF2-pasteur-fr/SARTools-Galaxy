@@ -25,6 +25,7 @@
 	    --geneSelection $advanced_parameters.geneSelection
 	    --normalizationMethod $advanced_parameters.normalizationMethod
 	    --colors $advanced_parameters.colors
+            --forceCairoGraph $advanced_parameters.forceCairoGraph
     	#end if
 	## ouputs
 	@COMMAND_OUTPUTS@
@@ -57,6 +58,7 @@
                 	<option value="upperquartile">upperquartile</option>
 		</param>
 		<expand macro="colors_param" />
+		<expand macro="forceCairoGraph_param" />
             </when>
         </conditional>
 
