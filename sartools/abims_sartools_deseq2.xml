@@ -49,6 +49,7 @@
                 <param name="fitType" type="select" label="Mean-variance relationship" argument="--fitType" help="Type of model for the mean-dispersion relationship. Parametric by default." >
           		<option value="parametric" selected="true">parametric</option>
 			<option value="local">local</option>
+			<option value="mean">mean</option>
 		</param>
 		<param name="cooksCutoff" type="boolean" checked="true" truevalue="TRUE" falsevalue="FALSE" label="Perform the outliers detection" argument="--cooksCutoff" help="Checked by default."/>
 		<param name="independentFiltering" type="boolean" checked="true" truevalue="TRUE" falsevalue="FALSE" label="Perform independent filtering" argument="--independentFiltering" help="Checked by default."/>
