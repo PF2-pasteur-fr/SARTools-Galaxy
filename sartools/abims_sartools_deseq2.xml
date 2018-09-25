@@ -88,7 +88,7 @@
             <output name="log">
                 <assert_contents>
                     <has_text text="KO vs WT    0.1       171" />
-                    <has_text text="KO vs WT    2584   2665 5249" />
+                    <has_text text="KO vs WT    2583   2663 5246" />
                     <has_text text="HTML report created" />
                 </assert_contents>
             </output>
