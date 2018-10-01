@@ -1,6 +1,6 @@
------------------------------------------------------------
-SARTools-Galaxy: a galaxy wrapper for SARTools version 1.3.2
------------------------------------------------------------
+--------------------------------------------------------------------------------------
+SARTools-Galaxy: a galaxy wrapper for SARTools (Statistical Analysis of RNA-Seq Tools) 
+--------------------------------------------------------------------------------------
 
 [![Build Status](https://travis-ci.org/PF2-pasteur-fr/SARTools-Galaxy.svg?branch=master)](https://travis-ci.org/PF2-pasteur-fr/SARTools-Galaxy)
 
@@ -12,10 +12,9 @@ Description:
 
 Requirements:
 -------------
-    R (3.3.0 or higher), Bio-conductor package 
-    SARTools package (1.3.2)
-    other R packages: DESeq2 (1.12.0 or higher), edgeR (3.12.0 or higher), genefilter, xtable and knitr
-    Rscript
+    These Galaxy tools need:
+    - R and the following R packages: SARTools, DESeq2, edgeR, genefilter, xtable and knitr.
+    - Rscript and optparse package
 
     SARTools can be downloaded on github (https://github.com/PF2-pasteur-fr/SARTools). More information about installation can be found at this url.
 

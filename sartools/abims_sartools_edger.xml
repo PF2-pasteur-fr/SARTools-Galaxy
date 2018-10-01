@@ -25,6 +25,7 @@
 	    --geneSelection $advanced_parameters.geneSelection
 	    --normalizationMethod $advanced_parameters.normalizationMethod
 	    --colors $advanced_parameters.colors
+            --forceCairoGraph $advanced_parameters.forceCairoGraph
     	#end if
 	## ouputs
 	@COMMAND_OUTPUTS@
@@ -46,17 +47,18 @@
 		<expand macro="batch_param" />
 		<expand macro="alpha_param" />
 		<expand macro="padjustmethod_param" />
-		<param name="cpmCutoff" type="integer" value="1" min="0" label="Counts-per-million cut-off to filter low counts" help="(-m, --cpmCutoff) Set to 0 to disable filtering. Default is 1." />
-		<param name="geneSelection" type="select" label="Selection of the features in MDSPlot" help="(-g, --gene.selection) Default is 'pairwise'." >
+		<param type="integer" value="1" min="0" label="Counts-per-million cut-off to filter low counts" argument="--cpmCutoff" help="Set to 0 to disable filtering. Default is 1." />
+		<param name="geneSelection" type="select" label="Selection of the features in MDSPlot" argument="--gene.selection" help="Default is 'pairwise'." >
                 	<option value="pairwise" selected="true">pairwise</option>
                 	<option value="common">common</option>
 		</param>
-		<param name="normalizationMethod" type="select" label="Normalization method in calcNormFactors" help="(-n, --normalizationMethod) 'TMM' (default), 'RLE' (DESeq method) or 'upperquartile'." >
+		<param type="select" label="Normalization method in calcNormFactors" argument="--normalizationMethod" help="'TMM' (default), 'RLE' (DESeq method) or 'upperquartile'." >
                 	<option value="TMM" selected="true">TMM</option>
                 	<option value="RLE">RLE</option>
                 	<option value="upperquartile">upperquartile</option>
 		</param>
 		<expand macro="colors_param" />
+		<expand macro="forceCairoGraph_param" />
             </when>
         </conditional>
 
@@ -159,6 +161,7 @@ Parameters
 	* **gene.selection:** method of selection of the features for the MultiDimensional Scaling plot ("pairwise" by default or common);
 	* **normalizationMethod:** normalization method in calcNormFactors(): "TMM" (default), "RLE" (DESeq method) or "upperquartile";
 	* **colors:** colors used for the figures (one per biological condition), 8 are given by default.
+	* **forceCairoGraph:** TRUE or FALSE (default) to force the use of cairo with options(bitmapType="cairo").
 
 
 ------------

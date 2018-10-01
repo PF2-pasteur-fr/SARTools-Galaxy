@@ -1,11 +1,11 @@
 <macros>
 
-    <token name="@WRAPPER_VERSION@">1.3.2</token>
+    <token name="@WRAPPER_VERSION@">1.6.3</token>
 
     <xml name="requirements">
         <requirements>
-            <requirement type="package" version="1.3.2">r-sartools</requirement>
-            <requirement type="package" version="1.3.2">r-optparse</requirement>
+            <requirement type="package" version="1.6.3">r-sartools</requirement>
+            <requirement type="package" version="1.6.0">r-optparse</requirement>
         </requirements>
     </xml>
     
@@ -52,28 +52,28 @@
   </token>
 
   <macro name="basic_parameters">
-        <param name="projectName" type="text" value="Project" label="Name of the project used for the report" help="(-P, --projectName) No space allowed." >
+        <param type="text" value="Project" label="Name of the project used for the report" argument="--projectName" help="No space allowed." >
 		<validator type="regex" message="Field requires a value. No space allowed.">\S+</validator>
 	</param>
-        <param name="author" type="text" value="Galaxy" label="Name of the report author" help="(-A, --author) No space allowed." >
+        <param type="text" value="Galaxy" label="Name of the report author" argument="--author" help="No space allowed." >
 		<validator type="regex" message="Field requires a value. No space allowed.">\S+</validator>
 	</param>
-        <param name="targetFile" type="data" format="txt" label="Design / target file" help="(-t, --targetFile) See the help section below for details on the required format." />        
-        <param name="rawDir" type="data" format="no_unzip.zip,zip" label="Zip file containing raw counts files" help="(-r, --rawDir) See the help section below for details on the required format." />        
-        <param name="featuresToRemove" type="text" size="100" value="alignment_not_unique,ambiguous,no_feature,not_aligned,too_low_aQual" label="Names of the features to be removed" help="(-F, --featuresToRemove) Separate the features with a comma, no space allowed. More than once can be specified. Specific HTSeq-count information and rRNA for example. Default are 'alignment_not_unique,ambiguous,no_feature,not_aligned,too_low_aQual'." >
+        <param type="data" format="txt" label="Design / target file" argument="--targetFile" help="See the help section below for details on the required format." />        
+        <param type="data" format="no_unzip.zip,zip" label="Zip file containing raw counts files" argument="--rawDir" help="See the help section below for details on the required format." />        
+        <param type="text" size="100" value="alignment_not_unique,ambiguous,no_feature,not_aligned,too_low_aQual" label="Names of the features to be removed" argument="--featuresToRemove" help="Separate the features with a comma, no space allowed. More than once can be specified. Specific HTSeq-count information and rRNA for example. Default are 'alignment_not_unique,ambiguous,no_feature,not_aligned,too_low_aQual'." >
 		<validator type="regex" message="Field requires a value. No space allowed.">\S+</validator>
 	</param>
-        <param name="varInt" type="text" value="group" label="Factor of interest" help="(-v, --varInt) Biological condition in the target file. Default is 'group'." >
+        <param type="text" value="group" label="Factor of interest" argument="--varInt" help="Biological condition in the target file. Default is 'group'." >
 		<validator type="regex" message="Field requires a value. No space allowed.">\S+</validator>
 	</param>
-        <param name="condRef" type="text" value="WT" label="Reference biological condition" help="(-c, --condRef) Reference biological condition used to compute fold-changes, must be one of the levels of 'Factor of interest'." >
+        <param type="text" value="WT" label="Reference biological condition" argument="--condRef" help="Reference biological condition used to compute fold-changes, must be one of the levels of 'Factor of interest'." >
 		<validator type="regex" message="Field requires a value. No space allowed.">\S+</validator>
 	</param>
   </macro>
 
   <macro name="batch_param">
 		<conditional name="batch_condition">
-			<param name="condition" type="boolean" checked="false" truevalue="batch" falsevalue="NULL" label="Add a blocking factor" help="(-b, --batch) Adjustment variable to use as a batch effect. Default: unchecked if no batch effect needs to be taken into account."/>
+			<param name="condition" type="boolean" checked="false" truevalue="batch" falsevalue="NULL" label="Add a blocking factor" argument="--batch" help="Adjustment variable to use as a batch effect. Default: unchecked if no batch effect needs to be taken into account."/>
             		<when value="NULL" />
 			<when value="batch">
 				<param name="batch" type="text" value="batch" label="Blocking factor value" help="Must be a column of the target file" >
@@ -84,11 +84,11 @@
   </macro>
 
   <macro name="alpha_param">
-		<param name="alpha" type="float" value="0.05" min="0" max="1" label="Threshold of statistical significance" help="(-a, --alpha) Significance threshold applied to the adjusted p-values to select the differentially expressed features. Default is 0.05. The comma is not allowed as decimal separator, use a point instead." />
+		<param type="float" value="0.05" min="0" max="1" label="Threshold of statistical significance" argument="--alpha" help="Significance threshold applied to the adjusted p-values to select the differentially expressed features. Default is 0.05. The comma is not allowed as decimal separator, use a point instead." />
   </macro>
 
   <macro name="padjustmethod_param">
-		<param name="pAdjustMethod" type="select" label="p-value adjustment method" help="(-p, --pAdjustMethod) p-value adjustment method for multiple testing. 'BH' by default, 'BY' or any value of p.adjust.methods." >
+		<param type="select" label="p-value adjustment method" argument="--pAdjustMethod" help="p-value adjustment method for multiple testing. 'BH' by default, 'BY' or any value of p.adjust.methods." >
                 	<option value="BH" selected="true">BH</option>
                 	<option value="BY">BY</option>
                 	<option value="bonferroni">bonferroni</option>
@@ -100,9 +100,13 @@
   </macro>
 
   <macro name="colors_param">
-		<param name="colors" type="text" size="100" value="dodgerblue,firebrick1,MediumVioletRed,SpringGreen,chartreuse,cyan,darkorchid,darkorange" label="Colors of each biological condition on the plots: 'col1,col2,col3,col4'"           help="(-C, --colors) Separate the colors with a comma, no space allowed. Default are 'dodgerblue,firebrick1,MediumVioletRed,SpringGreen,chartreuse,cyan,darkorchid,darkorange'." >
+		<param type="text" size="100" value="dodgerblue,firebrick1,MediumVioletRed,SpringGreen,chartreuse,cyan,darkorchid,darkorange" label="Colors of each biological condition on the plots: 'col1,col2,col3,col4'" argument="--colors" help="Separate the colors with a comma, no space allowed. Default are 'dodgerblue,firebrick1,MediumVioletRed,SpringGreen,chartreuse,cyan,darkorchid,darkorange'." >
 			<validator type="regex" message="Field requires a value. No space allowed.">\S+</validator>
 		</param>
+  </macro>
+
+  <macro name="forceCairoGraph_param">
+		<param type="boolean" checked="false" truevalue="TRUE" falsevalue="FALSE" label="Activate cairo type" argument="--forceCairoGraph" help="Unchecked by default." />
   </macro>
 
   <macro name="outputs">

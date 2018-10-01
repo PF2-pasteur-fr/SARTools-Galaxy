@@ -31,6 +31,7 @@ def main():
     parser.add_argument('--geneSelection')
     parser.add_argument('--normalizationMethod')
     parser.add_argument('--colors')
+    parser.add_argument('--forceCairoGraph')
     parser.add_argument('--figures_html')
     parser.add_argument('--figures_html_files_path')
     parser.add_argument('--tables_html')
@@ -53,6 +54,7 @@ def main():
     geneSelection=args.geneSelection
     normalizationMethod=args.normalizationMethod
     colors=args.colors
+    forceCairoGraph=args.forceCairoGraph
     figures_html=args.figures_html
     figures_html_files_path=args.figures_html_files_path
     tables_html=args.tables_html
@@ -91,6 +93,8 @@ def main():
         cmd+="--normalizationMethod %s " % (normalizationMethod)
     if colors:
         cmd+="--colors %s " % (colors)
+    if forceCairoGraph:
+        cmd+="--forceCairoGraph %s " % (forceCairoGraph)
     cmd+="> %s 2>&1" % (log)
     print("Rscript command: %s") % (cmd)
     os.system(cmd)

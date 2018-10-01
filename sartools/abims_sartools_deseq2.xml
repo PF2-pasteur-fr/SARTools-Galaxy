@@ -26,6 +26,7 @@
 	    --typeTrans $advanced_parameters.typeTrans
 	    --locfunc $advanced_parameters.locfunc
 	    --colors $advanced_parameters.colors
+            --forceCairoGraph $advanced_parameters.forceCairoGraph
     	#end if
 	## ouputs
 	@COMMAND_OUTPUTS@
@@ -45,23 +46,25 @@
             <when value="hide" />
             <when value="show">
 		<expand macro="batch_param" />
-                <param name="fitType" type="select" label="Mean-variance relationship" help="(-f, --fitType) Type of model for the mean-dispersion relationship. Parametric by default." >
+                <param type="select" label="Mean-variance relationship" argument="--fitType" help="Type of model for the mean-dispersion relationship. Parametric by default." >
           		<option value="parametric" selected="true">parametric</option>
 			<option value="local">local</option>
+			<option value="mean">mean</option>
 		</param>
-		<param name="cooksCutoff" type="boolean" checked="true" truevalue="TRUE" falsevalue="FALSE" label="Perform the outliers detection" help="(-o, --cooksCutoff) Checked by default."/>
-		<param name="independentFiltering" type="boolean" checked="true" truevalue="TRUE" falsevalue="FALSE" label="Perform independent filtering" help="(-i, --independentFiltering) Checked by default."/>
+		<param type="boolean" checked="true" truevalue="TRUE" falsevalue="FALSE" label="Perform the outliers detection" argument="--cooksCutoff" help="Checked by default."/>
+		<param type="boolean" checked="true" truevalue="TRUE" falsevalue="FALSE" label="Perform independent filtering" argument="--independentFiltering" help="Checked by default."/>
 		<expand macro="alpha_param" />
 		<expand macro="padjustmethod_param" />
-            	<param name="typeTrans" type="select" label="Transformation for PCA/clustering" help="(-T --typeTrans) Method of transformation of the counts for the clustering and the PCA: 'VST' (default) for Variance Stabilizing Transformation, or 'rlog' for Regularized Log Transformation." >
+            	<param type="select" label="Transformation for PCA/clustering" argument="--typeTrans" help="Method of transformation of the counts for the clustering and the PCA: 'VST' (default) for Variance Stabilizing Transformation, or 'rlog' for Regularized Log Transformation." >
                 	<option value="VST" selected="true">VST</option>
                 	<option value="rlog">rlog</option>
             	</param>
-            	<param name="locfunc" type="select" label="Estimation of the size factors" help="(-l --locfunc) 'median' (default) or 'shorth' from the genefilter package." >
+            	<param type="select" label="Estimation of the size factors" argument="--locfunc" help="'median' (default) or 'shorth' from the genefilter package." >
                 	<option value="median" selected="true">median</option>
                 	<option value="shorth">shorth</option>
             	</param>
 		<expand macro="colors_param" />
+		<expand macro="forceCairoGraph_param" />
             </when>
         </conditional>
 
@@ -85,7 +88,7 @@
             <output name="log">
                 <assert_contents>
                     <has_text text="KO vs WT    0.1       171" />
-                    <has_text text="KO vs WT    2584   2665 5249" />
+                    <has_text text="KO vs WT    2583   2663 5246" />
                     <has_text text="HTML report created" />
                 </assert_contents>
             </output>
@@ -142,6 +145,7 @@ Parameters
 	* **typeTrans:** method of transformation of the counts for the clustering and the PCA (default is "VST" for Variance Stabilizing Transformation, or "rlog" for Regularized Log Transformation);
 	* **locfunc:** function used for the estimation of the size factors (default is "median", or "shorth" from the genefilter package);
 	* **colors:** colors used for the figures (one per biological condition), 8 are given by default.
+	* **forceCairoGraph:** TRUE or FALSE (default) to force the use of cairo with options(bitmapType="cairo").
 
 
 ------------

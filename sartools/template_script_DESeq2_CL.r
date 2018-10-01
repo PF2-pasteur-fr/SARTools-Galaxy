@@ -1,17 +1,9 @@
-#!/local/gensoft2/exe/R/3.1.2/bin/Rscript
-
-# to run this script, use one of these commands:
-# Rscript --no-save --no-restore --verbose template_script_DESeq2_CL.r -r raw -v group -c T0 > log.txt 2>&1
-# Rscript template_script_DESeq2_CL.r -r raw -v group -c T0
-
-# to get help:
-# Rscript template_script_DESeq2_CL.r --help
-
 ################################################################################
 ### R script to compare several conditions with the SARTools and DESeq2 packages
 ### Hugo Varet
-### April 20th, 2015
-### designed to be executed with SARTools 1.1.0
+### March 20th, 2018
+### designed to be executed with SARTools 1.6.3
+### run "Rscript template_script_DESeq2_CL.r --help" to get some help
 ################################################################################
 
 rm(list=ls())                                        # remove all the objects from the R session
@@ -62,7 +54,7 @@ make_option(c("-b", "--batch"),
 make_option(c("-f", "--fitType"),
 			default="parametric",
 			dest="fitType", 
-			help="mean-variance relationship: [default: %default] or local"),
+			help="mean-variance relationship: [default: %default], local or mean"),
 
 make_option(c("-o", "--cooksCutoff"),
 			default=TRUE,
@@ -97,7 +89,14 @@ make_option(c("-l", "--locfunc"),
 make_option(c("-C", "--colors"),
 			default="dodgerblue,firebrick1,MediumVioletRed,SpringGreen,chartreuse,cyan,darkorchid,darkorange",
 			dest="cols",
-			help="colors of each biological condition on the plots\n\t\t\"col1,col2,col3,col4\"\n\t\t[default: %default]")
+			help="colors of each biological condition on the plots\n\t\t\"col1,col2,col3,col4\"\n\t\t[default: %default]"),
+
+make_option(c("-g", "--forceCairoGraph"),
+            action="store_true",
+            default=FALSE,
+            dest="forceCairoGraph",
+            help="activate cairo type")
+
 )
 
 # now parse the command line to check which option is given and get associated values
@@ -117,7 +116,7 @@ featuresToRemove <- unlist(strsplit(opt$FTR, ","))   # names of the features to 
 varInt <- opt$varInt                                 # factor of interest
 condRef <- opt$condRef                               # reference biological condition
 batch <- opt$batch                                   # blocking factor: NULL (default) or "batch" for example
-fitType <- opt$fitType                               # mean-variance relationship: "parametric" (default) or "local"
+fitType <- opt$fitType                               # mean-variance relationship: "parametric" (default), "local" or "mean"
 cooksCutoff <- opt$cooksCutoff                       # outliers detection threshold (NULL to let DESeq2 choosing it)
 independentFiltering <- opt$independentFiltering     # TRUE/FALSE to perform independent filtering (default is TRUE)
 alpha <- as.numeric(opt$alpha)                       # threshold of statistical significance
@@ -125,7 +124,7 @@ pAdjustMethod <- opt$pAdjustMethod                   # p-value adjustment method
 typeTrans <- opt$typeTrans                           # transformation for PCA/clustering: "VST" ou "rlog"
 locfunc <- opt$locfunc                               # "median" (default) or "shorth" to estimate the size factors
 colors <- unlist(strsplit(opt$cols, ","))            # vector of colors of each biologicial condition on the plots
-	
+forceCairoGraph <- opt$forceCairoGraph				 # force cairo as plotting device if enabled
 # print(paste("workDir", workDir))
 # print(paste("projectName", projectName))
 # print(paste("author", author))
@@ -149,6 +148,7 @@ colors <- unlist(strsplit(opt$cols, ","))            # vector of colors of each 
 ################################################################################
 # setwd(workDir)
 library(SARTools)
+if (forceCairoGraph) options(bitmapType="cairo")
 
 # checking parameters
 problem <- checkParameters.DESeq2(projectName=projectName,author=author,targetFile=targetFile,
