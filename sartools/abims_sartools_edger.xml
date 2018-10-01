@@ -52,7 +52,7 @@
                 	<option value="pairwise" selected="true">pairwise</option>
                 	<option value="common">common</option>
 		</param>
-		<param type="select" label="Normalization method in calcNormFactors" argument="--normalizationMethod" help="'TMM' (default), 'RLE' (DESeq method) or 'upperquartile'." >
+		<param name="geneSelection" type="select" label="Normalization method in calcNormFactors" argument="--normalizationMethod" help="'TMM' (default), 'RLE' (DESeq method) or 'upperquartile'." >
                 	<option value="TMM" selected="true">TMM</option>
                 	<option value="RLE">RLE</option>
                 	<option value="upperquartile">upperquartile</option>
