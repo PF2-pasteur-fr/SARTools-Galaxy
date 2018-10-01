@@ -48,11 +48,11 @@
 		<expand macro="alpha_param" />
 		<expand macro="padjustmethod_param" />
 		<param type="integer" value="1" min="0" label="Counts-per-million cut-off to filter low counts" argument="--cpmCutoff" help="Set to 0 to disable filtering. Default is 1." />
-		<param type="select" label="Selection of the features in MDSPlot" argument="--gene.selection" help="Default is 'pairwise'." >
+		<param name="geneSelection" type="select" label="Selection of the features in MDSPlot" argument="--gene.selection" help="Default is 'pairwise'." >
                 	<option value="pairwise" selected="true">pairwise</option>
                 	<option value="common">common</option>
 		</param>
-		<param name="geneSelection" type="select" label="Normalization method in calcNormFactors" argument="--normalizationMethod" help="'TMM' (default), 'RLE' (DESeq method) or 'upperquartile'." >
+		<param type="select" label="Normalization method in calcNormFactors" argument="--normalizationMethod" help="'TMM' (default), 'RLE' (DESeq method) or 'upperquartile'." >
                 	<option value="TMM" selected="true">TMM</option>
                 	<option value="RLE">RLE</option>
                 	<option value="upperquartile">upperquartile</option>
