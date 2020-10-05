@@ -19,7 +19,7 @@ install:
  - export PATH="$PLANEMO_CONDA_PREFIX/bin:$PATH"
  - planemo --version
  - conda --version
- - planemo conda_install --conda_channels iuc,bioconda,conda-forge,defaults ${TRAVIS_BUILD_DIR}/sartools/
+ - travis_wait 30 planemo conda_install --conda_channels iuc,bioconda,conda-forge,defaults ${TRAVIS_BUILD_DIR}/sartools/
 
 script:
  - planemo test --install_galaxy --no_cache_galaxy --conda_dependency_resolution --conda_channels iuc,bioconda,conda-forge,defaults --galaxy_branch "$GALAXY_RELEASE" ${TRAVIS_BUILD_DIR}/sartools
