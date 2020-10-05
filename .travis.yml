@@ -1,25 +1,37 @@
-
 # This is a special configuration file to run tests on Travis-CI via
 # GitHub notifications when changes are committed.
 #
 # See http://travis-ci.org/ for details
 language: python
+cache: pip
+
+jobs:
+  include:
+    - stage: lint
+      addons: {}
+      before_install: skip
+      install:
+        - pip install flake8 flake8-import-order planemo
+        - planemo --version
+      script:
+        - set -e
+        - planemo shed_lint --tools --ensure_metadata --urls --report_level warn --fail_level error --recursive ${TRAVIS_BUILD_DIR}/sartools
+
+    - stage: test
+      script:
+        - set -e
+        - planemo test --install_galaxy --no_cache_galaxy --conda_dependency_resolution --conda_channels iuc,conda-forge,bioconda,defaults --galaxy_branch "$GALAXY_RELEASE" --galaxy_source "$GALAXY_REPO" ${TRAVIS_BUILD_DIR}/sartools
 
 before_install:
- - export GALAXY_RELEASE=release_17.05
- - export PLANEMO_CONDA_PREFIX="$HOME/conda"
- - sudo apt-get install -y python-virtualenv
- - virtualenv planemo-venv
- - . planemo-venv/bin/activate
- - pip install --upgrade pip setuptools
+  - export GALAXY_REPO=https://github.com/galaxyproject/galaxy
+  - export GALAXY_RELEASE=release_20.05
+  - export PLANEMO_CONDA_PREFIX="$HOME/conda"
+  - unset JAVA_HOME
 
 install:
- - pip install planemo
- - planemo conda_init
- - export PATH="$PLANEMO_CONDA_PREFIX/bin:$PATH"
- - planemo --version
- - conda --version
- - travis_wait 30 planemo conda_install --conda_channels iuc,bioconda,conda-forge,defaults ${TRAVIS_BUILD_DIR}/sartools/
+  - pip install planemo
+  - planemo conda_init
+  - export PATH="$PLANEMO_CONDA_PREFIX/bin:$PATH"
+  - planemo --version
+  - conda --version
 
-script:
- - planemo test --install_galaxy --no_cache_galaxy --conda_dependency_resolution --conda_channels iuc,bioconda,conda-forge,defaults --galaxy_branch "$GALAXY_RELEASE" ${TRAVIS_BUILD_DIR}/sartools
