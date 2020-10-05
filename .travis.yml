@@ -5,6 +5,8 @@
 language: python
 cache: pip
 
+python: 3.7
+
 jobs:
   include:
     - stage: lint
@@ -15,12 +17,13 @@ jobs:
         - planemo --version
       script:
         - set -e
+        - planemo lint
         - planemo shed_lint --tools --ensure_metadata --urls --report_level warn --fail_level error --recursive ${TRAVIS_BUILD_DIR}/sartools
 
     - stage: test
       script:
         - set -e
-        - planemo test --conda_dependency_resolution --conda_auto_install --conda_channels iuc,conda-forge,bioconda,defaults --galaxy_branch "$GALAXY_RELEASE" --galaxy_source "$GALAXY_REPO" ${TRAVIS_BUILD_DIR}/sartools
+        - planemo test --conda_dependency_resolution --conda_auto_install --conda_channels iuc,conda-forge,bioconda,defaults --galaxy_python_version "$TRAVIS_PYTHON_VERSION" --galaxy_branch "$GALAXY_RELEASE" --galaxy_source "$GALAXY_REPO" ${TRAVIS_BUILD_DIR}/sartools
 
 before_install:
   - export GALAXY_REPO=https://github.com/galaxyproject/galaxy
