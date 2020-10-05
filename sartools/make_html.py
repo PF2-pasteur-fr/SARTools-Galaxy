@@ -68,6 +68,6 @@ html+='</table></div><br/>\n'
 
 html+=fin_html
 
-htmlf = file(output_html,'w')
+htmlf = open(output_html,'w')
 htmlf.write(html)
 htmlf.close()
