@@ -101,7 +101,7 @@
             <param name="levels_1|rep_counts_0|label" value="group2_rep1"/>
             <param name="levels_1|rep_counts_1|count_data" value="group2_count2.txt"/>
             <param name="levels_1|rep_counts_1|label" value="group2_rep2"/>
-            <output name="outfile" file="test_output_target.html"/>
+            <output name="outfile" file="test_output_target.html" compare="re_match"/>
         </test>
     </tests>
     <help>

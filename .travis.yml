@@ -17,7 +17,7 @@ jobs:
         - planemo --version
       script:
         - set -e
-        - planemo lint
+        - planemo lint -r ${TRAVIS_BUILD_DIR}/sartools
         - planemo shed_lint --tools --ensure_metadata --urls --report_level warn --fail_level error --recursive ${TRAVIS_BUILD_DIR}/sartools
 
     - stage: test
