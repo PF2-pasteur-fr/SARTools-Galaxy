@@ -115,4 +115,7 @@ Description
  * In input of SARTools, don't change the "factor of interest", by default is group but you need to change the "Reference biological condition" in order to correspond to one name of the groups.
  * If you add a blocking factor, you need to specify it in "Advanced Parameters" of SARTools
     </help>
+    <citations>
+        <citation type="doi">10.1371/journal.pone.0157022</citation>
+    </citations>
 </tool>
