@@ -11,9 +11,9 @@
     <expand macro="stdio"/>
     
     <!-- [REQUIRED] The command to execute -->
-    <command interpreter="python"><![CDATA[
+    <command><![CDATA[
 	
-	abims_sartools_deseq2_wrapper.py
+	python '$__tool_directory__/abims_sartools_deseq2_wrapper.py'
 	## parameters
 	@COMMAND_BASIC_PARAMETERS@
     	#if str( $advanced_parameters.adv_param ) == "show":

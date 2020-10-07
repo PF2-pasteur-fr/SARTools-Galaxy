@@ -3,8 +3,8 @@
     <stdio>
         <regex match="WARNING:galaxy.model:Datatype class not found" level="warning"/>
     </stdio>
-    <command interpreter="python">
-        pre_sartools.py
+    <command><![CDATA[
+	python '$__tool_directory__/pre_sartools.py'
         --outfile=$outfile
         --outarch=$outarch
         #if $batch_condition.condition:
@@ -23,7 +23,7 @@
             #end for
         #end if
 
-    </command>
+    ]]></command>
     <inputs>
         <conditional name="batch_condition">
             <param name="condition" type="boolean" checked="false" truevalue="batch" falsevalue="NULL" label="Add a blocking factor" help="Adjustment variable to use as a batch effect (default no)."/>

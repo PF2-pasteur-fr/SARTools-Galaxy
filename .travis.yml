@@ -13,12 +13,12 @@ jobs:
       addons: {}
       before_install: skip
       install:
-        - pip install flake8 flake8-import-order planemo
+        - pip install flake8 flake8-import-order planemo Pygments
         - planemo --version
       script:
         - set -e
         - planemo lint -r ${TRAVIS_BUILD_DIR}/sartools
-        - planemo shed_lint --tools --ensure_metadata --urls --report_level warn --fail_level error --recursive ${TRAVIS_BUILD_DIR}/sartools
+        - planemo shed_lint --tools --ensure_metadata --urls --recursive ${TRAVIS_BUILD_DIR}/sartools
 
     - stage: test
       script:
