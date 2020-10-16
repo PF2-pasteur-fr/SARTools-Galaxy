@@ -1,10 +1,10 @@
-<tool id="presartools" name="Preprocess files for SARTools" version="0.1.0">
+<tool id="presartools" name="Preprocess files for SARTools" version="0.1.1">
     <description>generate design/target file and archive for SARTools inputs</description>
     <stdio>
         <regex match="WARNING:galaxy.model:Datatype class not found" level="warning"/>
     </stdio>
-    <command interpreter="python">
-        pre_sartools.py
+    <command><![CDATA[
+	python '$__tool_directory__/pre_sartools.py'
         --outfile=$outfile
         --outarch=$outarch
         #if $batch_condition.condition:
@@ -23,7 +23,7 @@
             #end for
         #end if
 
-    </command>
+    ]]></command>
     <inputs>
         <conditional name="batch_condition">
             <param name="condition" type="boolean" checked="false" truevalue="batch" falsevalue="NULL" label="Add a blocking factor" help="Adjustment variable to use as a batch effect (default no)."/>
@@ -101,7 +101,7 @@
             <param name="levels_1|rep_counts_0|label" value="group2_rep1"/>
             <param name="levels_1|rep_counts_1|count_data" value="group2_count2.txt"/>
             <param name="levels_1|rep_counts_1|label" value="group2_rep2"/>
-            <output name="outfile" file="test_output_target.html"/>
+            <output name="outfile" file="test_output_target.html" compare="re_match"/>
         </test>
     </tests>
     <help>
@@ -115,4 +115,7 @@ Description
  * In input of SARTools, don't change the "factor of interest", by default is group but you need to change the "Reference biological condition" in order to correspond to one name of the groups.
  * If you add a blocking factor, you need to specify it in "Advanced Parameters" of SARTools
     </help>
+    <citations>
+        <citation type="doi">10.1371/journal.pone.0157022</citation>
+    </citations>
 </tool>

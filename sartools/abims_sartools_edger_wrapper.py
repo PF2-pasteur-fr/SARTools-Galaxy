@@ -63,7 +63,7 @@ def main():
     report_html=args.report_html
     log=args.log
     #Print the parameters selected
-    print("Wrapper arguments: %s") %(args)
+    print("Wrapper arguments: %s" %(args))
 
     #Get the working directory path
     working_directory = os.getcwd()
@@ -96,7 +96,7 @@ def main():
     if forceCairoGraph:
         cmd+="--forceCairoGraph %s " % (forceCairoGraph)
     cmd+="> %s 2>&1" % (log)
-    print("Rscript command: %s") % (cmd)
+    print("Rscript command: %s" % (cmd))
     os.system(cmd)
 
     #Get output files

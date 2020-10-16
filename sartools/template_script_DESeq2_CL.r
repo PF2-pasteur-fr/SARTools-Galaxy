@@ -184,6 +184,7 @@ summaryResults <- summarizeResults.DESeq2(out.DESeq2, group=target[,varInt], col
 save.image(file=paste0(projectName, ".RData"))
 
 # generating HTML report
+Sys.setenv(HOME = getwd())
 writeReport.DESeq2(target=target, counts=counts, out.DESeq2=out.DESeq2, summaryResults=summaryResults,
                    majSequences=majSequences, workDir=workDir, projectName=projectName, author=author,
                    targetFile=targetFile, rawDir=rawDir, featuresToRemove=featuresToRemove, varInt=varInt,

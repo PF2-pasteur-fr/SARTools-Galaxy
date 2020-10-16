@@ -51,8 +51,8 @@ def __main__():
             filename_base = basename(filename)
             # For RSEM files we process files as HTSeq count output
             tmpdir = tempfile.mkdtemp()
-            with open(filename, 'rb') as csvfile:
-                with open(join(tmpdir, basename(filename)), 'wb') as out:
+            with open(filename, 'rt') as csvfile:
+                with open(join(tmpdir, basename(filename)), 'wt') as out:
                     spamwriter = csv.writer(out, delimiter='\t')
                     reader = csv.DictReader(csvfile, delimiter='\t', skipinitialspace=True)
                     if len(reader.fieldnames) > 2:
