@@ -1,4 +1,4 @@
-<tool id="sartools_deseq2" name="SARTools DESeq2" version="@WRAPPER_VERSION@.1">
+<tool id="sartools_deseq2" name="SARTools DESeq2" version="@WRAPPER_VERSION@.0">
     
     <!-- [REQUIRED] Tool description displayed after the tool name -->
     <description>Compare two or more biological conditions in a RNA-Seq framework with DESeq2</description>
@@ -87,7 +87,7 @@
 	        <param name="adv_param" value="show"/>
             <output name="log">
                 <assert_contents>
-                    <has_text text="KO vs WT    0.1       171" />
+                    <has_text text="KO vs WT    0.1                171" />
                     <has_text text="KO vs WT    2583   2663 5246" />
                     <has_text text="HTML report created" />
                 </assert_contents>

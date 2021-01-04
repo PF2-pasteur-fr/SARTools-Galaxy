@@ -1,11 +1,10 @@
 <macros>
 
-    <token name="@WRAPPER_VERSION@">1.6.3</token>
+    <token name="@WRAPPER_VERSION@">1.7.3</token>
 
     <xml name="requirements">
         <requirements>
-            <requirement type="package" version="1.6.3">r-sartools</requirement>
-            <requirement type="package" version="1.6.0">r-optparse</requirement>
+            <requirement type="package" version="1.7.3">r-sartools</requirement>
         </requirements>
     </xml>
     
@@ -100,7 +99,7 @@
   </macro>
 
   <macro name="colors_param">
-		<param type="text" size="100" value="dodgerblue,firebrick1,MediumVioletRed,SpringGreen,chartreuse,cyan,darkorchid,darkorange" label="Colors of each biological condition on the plots: 'col1,col2,col3,col4'" argument="--colors" help="Separate the colors with a comma, no space allowed. Default are 'dodgerblue,firebrick1,MediumVioletRed,SpringGreen,chartreuse,cyan,darkorchid,darkorange'." >
+		<param type="text" size="100" value="#f3c300,#875692,#f38400,#a1caf1,#be0032,#c2b280,#848482,#008856,#e68fac,#0067a5" label="Colors of each biological condition on the plots: 'col1,col2,col3,col4'" argument="--colors" help="Separate the colors with a comma, no space allowed. Default are '#f3c300,#875692,#f38400,#a1caf1,#be0032,#c2b280,#848482,#008856,#e68fac,#0067a5'." >
 			<validator type="regex" message="Field requires a value. No space allowed.">\S+</validator>
 		</param>
   </macro>

@@ -1,4 +1,4 @@
-<tool id="sartools_edger" name="SARTools edgeR" version="@WRAPPER_VERSION@.1">
+<tool id="sartools_edger" name="SARTools edgeR" version="@WRAPPER_VERSION@.0">
     
     <!-- [REQUIRED] Tool description displayed after the tool name -->
     <description>Compare two or more biological conditions in a RNA-Seq framework with edgeR</description>
