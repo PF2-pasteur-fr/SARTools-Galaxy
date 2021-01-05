@@ -12,30 +12,6 @@ SARTools is a R package dedicated to the differential analysis of RNA-seq data.
 
 SARTools provides tools to generate descriptive and diagnostic graphs, to run the differential analysis with one of the well known DESeq2 or edgeR packages and to export the results into easily readable tab-delimited files. It also facilitates the generation of a HTML report which displays all the figures produced, explains the statistical methods and gives the results of the differential analysis. Note that SARTools does not intend to replace DESeq2 or edgeR: it simply provides an environment to go with them. For more details about the methodology behind DESeq2 or edgeR, the user should read their documentations and papers.
 
-
-Requirements:
-=============
-
-
-These Galaxy tools need:
-   - R and the following R packages:
-       - SARTools
-       - DESeq2
-       - edgeR
-       - knitr
-       - summarizedexperiment
-       - rmarkdown
-       - bit64
-       - blob
-       - ggplot2
-       - ggally
-       - ggrepel
-       - ggdendro
-       - kableextra
-       - optparse
-       - gridextra
-   - Rscript package
-
 SARTools can be downloaded on github (https://github.com/PF2-pasteur-fr/SARTools). More information about installation can be found at this url.
 
 
