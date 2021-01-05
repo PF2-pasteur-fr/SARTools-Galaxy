@@ -25,7 +25,7 @@
 	    --pAdjustMethod $advanced_parameters.pAdjustMethod
 	    --typeTrans $advanced_parameters.typeTrans
 	    --locfunc $advanced_parameters.locfunc
-	    --colors $advanced_parameters.colors
+	    --colors "'$advanced_parameters.colors'"
             --forceCairoGraph $advanced_parameters.forceCairoGraph
     	#end if
 	## ouputs

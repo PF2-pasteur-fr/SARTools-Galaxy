@@ -24,7 +24,7 @@
 	    --cpmCutoff $advanced_parameters.cpmCutoff
 	    --geneSelection $advanced_parameters.geneSelection
 	    --normalizationMethod $advanced_parameters.normalizationMethod
-	    --colors $advanced_parameters.colors
+	    --colors "'$advanced_parameters.colors'"
             --forceCairoGraph $advanced_parameters.forceCairoGraph
     	#end if
 	## ouputs
