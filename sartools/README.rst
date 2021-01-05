@@ -34,7 +34,7 @@ These Galaxy tools need:
        - kableextra
        - optparse
        - gridextra
-    - Rscript package
+   - Rscript package
 
 SARTools can be downloaded on github (https://github.com/PF2-pasteur-fr/SARTools). More information about installation can be found at this url.
 
