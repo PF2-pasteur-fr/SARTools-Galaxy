@@ -4,7 +4,7 @@
 
     <xml name="requirements">
         <requirements>
-            <requirement type="package" version="1.7.3">r-sartools</requirement>
+            <requirement type="package" version="@TOOL_VERSION@">r-sartools</requirement>
         </requirements>
     </xml>
     

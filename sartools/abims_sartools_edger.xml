@@ -1,6 +1,5 @@
 <tool id="sartools_edger" name="SARTools edgeR" version="@TOOL_VERSION@+galaxy0">
     
-    <!-- [REQUIRED] Tool description displayed after the tool name -->
     <description>Compare two or more biological conditions in a RNA-Seq framework with edgeR</description>
     
     <macros>
@@ -11,74 +10,59 @@
     <expand macro="stdio"/>
 
     
-    <!-- [REQUIRED] The command to execute -->
     <command><![CDATA[
  
 python '$__tool_directory__/abims_sartools_edger_wrapper.py'
 ## parameters
 @COMMAND_BASIC_PARAMETERS@
-#if str( '$advanced_parameters.adv_param' ) == "show":
-    @COMMAND_BATCH_PARAM@
-    --alpha '$advanced_parameters.alpha'
-    --pAdjustMethod '$advanced_parameters.pAdjustMethod'
-    --cpmCutoff '$advanced_parameters.cpmCutoff'
-    --geneSelection '$advanced_parameters.geneSelection'
-    --normalizationMethod '$advanced_parameters.normalizationMethod'
-    --colors "'$advanced_parameters.colors'"
-    --forceCairoGraph '$advanced_parameters.forceCairoGraph'
-#end if
+@COMMAND_BATCH_PARAM@
+--alpha '$advanced_parameters.alpha'
+--pAdjustMethod '$advanced_parameters.pAdjustMethod'
+--cpmCutoff '$advanced_parameters.cpmCutoff'
+--geneSelection '$advanced_parameters.geneSelection'
+--normalizationMethod '$advanced_parameters.normalizationMethod'
+--colors "'$advanced_parameters.colors'"
+--forceCairoGraph '$advanced_parameters.forceCairoGraph'
 ## ouputs
 @COMMAND_OUTPUTS@
         
     ]]></command>
     
-    <!-- [REQUIRED] Input files and tool parameters -->
     <inputs>
         
         <expand macro="basic_parameters" />
  
-        <conditional name="advanced_parameters" >
-            <param name="adv_param" type="select" label="Advanced Parameters" help="" >
-                <option value="hide" selected="true">Hide</option>
-                <option value="show">Show</option>
+        <section name="advanced_parameters" title="Advanced Parameters" expanded="false" >
+            <expand macro="batch_param" />
+            <expand macro="alpha_param" />
+            <expand macro="padjustmethod_param" />
+            <param type="integer" value="1" min="0" label="Counts-per-million cut-off to filter low counts" argument="--cpmCutoff" help="Set to 0 to disable filtering. Default is 1." />
+            <param name="geneSelection" type="select" label="Selection of the features in MDSPlot" argument="--gene.selection" help="Default is 'pairwise'." >
+                <option value="pairwise" selected="true">pairwise</option>
+                <option value="common">common</option>
             </param>
-            <when value="hide" />
-            <when value="show">
-                <expand macro="batch_param" />
-                <expand macro="alpha_param" />
-                <expand macro="padjustmethod_param" />
-                <param type="integer" value="1" min="0" label="Counts-per-million cut-off to filter low counts" argument="--cpmCutoff" help="Set to 0 to disable filtering. Default is 1." />
-                <param name="geneSelection" type="select" label="Selection of the features in MDSPlot" argument="--gene.selection" help="Default is 'pairwise'." >
-                    <option value="pairwise" selected="true">pairwise</option>
-                    <option value="common">common</option>
-                </param>
-                <param type="select" label="Normalization method in calcNormFactors" argument="--normalizationMethod" help="'TMM' (default), 'RLE' (DESeq method) or 'upperquartile'." >
-                    <option value="TMM" selected="true">TMM</option>
-                    <option value="RLE">RLE</option>
-                    <option value="upperquartile">upperquartile</option>
-                </param>
-                <expand macro="colors_param" />
-                <expand macro="forceCairoGraph_param" />
-            </when>
-        </conditional>
+            <param type="select" label="Normalization method in calcNormFactors" argument="--normalizationMethod" help="'TMM' (default), 'RLE' (DESeq method) or 'upperquartile'." >
+                <option value="TMM" selected="true">TMM</option>
+                <option value="RLE">RLE</option>
+                <option value="upperquartile">upperquartile</option>
+            </param>
+            <expand macro="colors_param" />
+            <expand macro="forceCairoGraph_param" />
+        </section>
 
     </inputs>
     
-    <!-- [REQUIRED] Output files -->
     <outputs>
         
         <expand macro="outputs" /> 
               
     </outputs>
     
-    <!-- [OPTIONAL] Tests to be run manually by the Galaxy admin -->
     <tests>
-        <!-- [HELP] Test files have to be in the ~/test-data directory -->
         <test>
      <!-- Test with 2 conditions, 2 replicates, 10 features -->
             <param name="targetFile" dbkey="?" value="target_small.txt" />
             <param name="rawDir" value="raw_small.zip" dbkey="?" ftype="zip"/>
-            <param name="adv_param" value="show"/>
             <output name="log">
                 <assert_contents>
                     <has_text text="KO vs WT    5      4    9" />
@@ -86,24 +70,22 @@ python '$__tool_directory__/abims_sartools_edger_wrapper.py'
                 </assert_contents>
             </output>
         </test>
-<!--        <test>
+<!--    <test>
 -->        <!-- NOT WORKING YET: Test with 3 conditions, 3 replicates, 10 features, with batch effect -->
-<!--            <param name="targetFile" dbkey="?" value="targetT048_small.txt" />
+<!--        <param name="targetFile" dbkey="?" value="targetT048_small.txt" />
             <param name="rawDir"   value="rawT048_small.zip" dbkey="?" ftype="no_unzip.zip"/>
-     <param name="condRef" value="T0"/>
-     <param name="adv_param" value="show"/>
-     <param name="condition" value="true"/>
+            <param name="condRef" value="T0"/>
+            <param name="condition" value="true"/>
             <output name="tables_html" file="SARTools_edgeR_targetT048_small_tables.html" lines_diff="12">
-             <extra_files type="file" name="T4vsT0.complete.txt" value="SARTools_edgeR_T4vsT0_small.complete.txt"/>
-             <extra_files type="file" name="T8vsT0.complete.txt" value="SARTools_edgeR_T8vsT0_small.complete.txt"/>
-             <extra_files type="file" name="T8vsT4.complete.txt" value="SARTools_edgeR_T8vsT4_small.complete.txt"/>
-     </output>
+                <extra_files type="file" name="T4vsT0.complete.txt" value="SARTools_edgeR_T4vsT0_small.complete.txt"/>
+                <extra_files type="file" name="T8vsT0.complete.txt" value="SARTools_edgeR_T8vsT0_small.complete.txt"/>
+                <extra_files type="file" name="T8vsT4.complete.txt" value="SARTools_edgeR_T8vsT4_small.complete.txt"/>
+            </output>
         </test>
 -->     <test>
         <!-- Test with 2 conditions, 2 replicates, 8217 features -->
             <param name="targetFile" dbkey="?" value="target.txt" />
             <param name="rawDir"   value="raw.zip" dbkey="?" ftype="zip"/>
-            <param name="adv_param" value="show"/>
             <output name="log">
                 <assert_contents>
                     <has_text text="KO vs WT    2691   2713 5404" />
@@ -111,22 +93,20 @@ python '$__tool_directory__/abims_sartools_edger_wrapper.py'
                 </assert_contents>
             </output>
         </test>
-<!--        <test>
+<!--    <test>
 -->        <!-- NOT WORKING YET: Test with 3 conditions, 3 replicates, 10160 features, with batch effect -->
-<!--            <param name="targetFile" dbkey="?" value="targetT048.txt" />
+<!--        <param name="targetFile" dbkey="?" value="targetT048.txt" />
             <param name="rawDir"   value="rawT048.zip" dbkey="?" ftype="no_unzip.zip"/>
-     <param name="condRef" value="T0"/>
-     <param name="adv_param" value="show"/>
-     <param name="condition" value="true"/>
+            <param name="condRef" value="T0"/>
+            <param name="condition" value="true"/>
             <output name="tables_html" file="SARTools_edgeR_targetT048_tables.html" lines_diff="14">
-             <extra_files type="file" name="T4vsT0.complete.txt" value="SARTools_edgeR_T4vsT0.complete.txt"/>
-             <extra_files type="file" name="T8vsT0.complete.txt" value="SARTools_edgeR_T8vsT0.complete.txt"/>
-             <extra_files type="file" name="T8vsT4.complete.txt" value="SARTools_edgeR_T8vsT4.complete.txt"/>
-     </output>
+                <extra_files type="file" name="T4vsT0.complete.txt" value="SARTools_edgeR_T4vsT0.complete.txt"/>
+                <extra_files type="file" name="T8vsT0.complete.txt" value="SARTools_edgeR_T8vsT0.complete.txt"/>
+                <extra_files type="file" name="T8vsT4.complete.txt" value="SARTools_edgeR_T8vsT4.complete.txt"/>
+            </output>
         </test>
 --> </tests>
     
-    <!-- [OPTIONAL] Help displayed in Galaxy -->
     <help><![CDATA[
 
 @HELP_AUTHORS@
